@@ -8,24 +8,60 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
-    private ListView listView;
-    private String[] gigsList = new String[]{
-            "As I Lay Dying",
-            "Currents",
-            "Counterparts",
-            "Fit For A King",
-            "Bury Tomorrow",
-    };
+//    private ListView listView;
+//    private String[] gigsList = new String[]{
+//            "As I Lay Dying",
+//            "Currents",
+//            "Counterparts",
+//            "Fit For A King",
+//            "Bury Tomorrow",};
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//
+//        listView = (ListView)findViewById(R.id.list);
+//        ArrayAdapter arrayAdapter = new ArrayAdapter(
+//                this,
+//                R.layout.array_list_item,
+//                R.id.band_name, gigsList);
+//        listView.setAdapter(arrayAdapter);
+//    }
+
+    ArrayList<GigModel> dataModels;
+    ListView listView;
+    private static CustomAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = (ListView)findViewById(R.id.list);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.array_list_item, R.id.array_element, gigsList);
-        listView.setAdapter(arrayAdapter);
+        listView=(ListView)findViewById(R.id.list);
+
+        dataModels= new ArrayList<>();
+
+        dataModels.add(new GigModel("As I Lay Dying", "Wrocław"));
+        dataModels.add(new GigModel("Parkway Drive", "Leeds"));
+        dataModels.add(new GigModel("Trivium", "Ostrów Wlkp"));
+
+        adapter= new CustomAdapter(dataModels,getApplicationContext());
+
+        listView.setAdapter(adapter);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                DataModel dataModel= dataModels.get(position);
+//
+//                Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
+//                        .setAction("No action", null).show();
+//            }
+//        });
     }
 
 }
