@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -43,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
+        case R.id.add_event:
+            Snackbar.make(this.findViewById(android.R.id.content), "a", 2000).show();
+            return(true);
+        case R.id.venues:
+            Snackbar.make(this.findViewById(android.R.id.content), "b", 2000).show();
+            return(true);
+        case R.id.settings:
+            Snackbar.make(this.findViewById(android.R.id.content), "c", 2000).show();
+            return(true);
+    }
+        return(super.onOptionsItemSelected(item));
     }
 
     @Override
