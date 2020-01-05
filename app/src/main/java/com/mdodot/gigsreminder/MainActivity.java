@@ -2,6 +2,8 @@ package com.mdodot.gigsreminder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -17,29 +21,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private ListView listView;
-//    private String[] gigsList = new String[]{
-//            "As I Lay Dying",
-//            "Currents",
-//            "Counterparts",
-//            "Fit For A King",
-//            "Bury Tomorrow",};
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        listView = (ListView)findViewById(R.id.list);
-//        ArrayAdapter arrayAdapter = new ArrayAdapter(
-//                this,
-//                R.layout.array_list_item,
-//                R.id.band_name, gigsList);
-//        listView.setAdapter(arrayAdapter);
-//    }
-
     ArrayList<GigModel> dataModels;
     ListView listView;
     private static CustomAdapter adapter;
+    static final int REQUEST_CODE = 1;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
         case R.id.add_event:
-            Snackbar.make(this.findViewById(android.R.id.content), "a", 2000).show();
+            Intent intent = new Intent(this, AddEvent.class);
+            startActivityForResult(intent, REQUEST_CODE);
             return(true);
         case R.id.venues:
             Snackbar.make(this.findViewById(android.R.id.content), "b", 2000).show();
@@ -64,31 +50,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            adapter.add(new GigModel(
+                    data.getExtras().getString("bandName"),
+                    data.getExtras().getString("townName")
+            ));
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView=(ListView)findViewById(R.id.list);
+        listView = (ListView)findViewById(R.id.list);
 
-        dataModels= new ArrayList<>();
+        dataModels = new ArrayList<>();
 
-        dataModels.add(new GigModel("As I Lay Dying", "Wrocław"));
-        dataModels.add(new GigModel("Parkway Drive", "Leeds"));
-        dataModels.add(new GigModel("Trivium", "Ostrów Wlkp"));
+        DBHelper dbHelper = new DBHelper(this);
 
-        adapter= new CustomAdapter(dataModels,getApplicationContext());
-
+        Cursor c = dbHelper.readFromDB();
+        while(c.moveToNext()) {
+            dataModels.add(
+                        new GigModel(
+                            c.getString(1),
+                            c.getString(2)
+                )
+            );
+            c.moveToNext();
+        }
+        adapter = new CustomAdapter(dataModels,getApplicationContext());
         listView.setAdapter(adapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                DataModel dataModel= dataModels.get(position);
-//
-//                Snackbar.make(view, dataModel.getName()+"\n"+dataModel.getType()+" API: "+dataModel.getVersion_number(), Snackbar.LENGTH_LONG)
-//                        .setAction("No action", null).show();
-//            }
-//        });
+        dbHelper.close();
     }
-
 }

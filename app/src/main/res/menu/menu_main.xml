@@ -5,7 +5,7 @@
         android:id="@+id/action_notification1"
         android:icon="@drawable/ic_more_horiz"
         android:title="actions"
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/add_event"
