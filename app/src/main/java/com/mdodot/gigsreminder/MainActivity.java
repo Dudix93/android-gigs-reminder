@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             adapter.add(new GigModel(
                     data.getExtras().getString("bandName"),
-                    data.getExtras().getString("townName")
+                    data.getExtras().getString("townName"),
+                    data.getExtras().getString("eventDate"),
+                    data.getExtras().getString("eventTime")
             ));
         }
     }
@@ -73,9 +75,11 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = dbHelper.readFromDB();
         while(c.moveToNext()) {
             dataModels.add(
-                        new GigModel(
-                            c.getString(1),
-                            c.getString(2)
+                new GigModel(
+                    c.getString(1),
+                    c.getString(2),
+                    c.getString(3),
+                    c.getString(4)
                 )
             );
             c.moveToNext();

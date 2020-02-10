@@ -16,6 +16,8 @@ public class CustomAdapter extends ArrayAdapter<GigModel>  {
     private static class ViewHolder {
         TextView band;
         TextView town;
+        TextView date;
+        TextView time;
     }
 
     public CustomAdapter(ArrayList<GigModel> data, Context context){
@@ -24,11 +26,6 @@ public class CustomAdapter extends ArrayAdapter<GigModel>  {
         this.mContext = context;
     }
 
-//    @Override
-//    public void onClick(View v) {
-//
-//    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         GigModel gigModel = getItem(position);
@@ -36,23 +33,24 @@ public class CustomAdapter extends ArrayAdapter<GigModel>  {
         final View result;
 
         if (convertView == null) {
-
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.array_list_item, parent, false);
             viewHolder.band = (TextView) convertView.findViewById(R.id.band_name);
             viewHolder.town = (TextView) convertView.findViewById(R.id.town);
-
-            result=convertView;
-
+            viewHolder.town = (TextView) convertView.findViewById(R.id.eventDate);
+            viewHolder.town = (TextView) convertView.findViewById(R.id.eventTime);
+            result = convertView;
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result=convertView;
+            result = convertView;
         }
 
         viewHolder.band.setText(gigModel.getBand());
         viewHolder.town.setText(gigModel.getTown());
+        viewHolder.town.setText(gigModel.getDate());
+        viewHolder.town.setText(gigModel.getTime());
 
         return convertView;
     }

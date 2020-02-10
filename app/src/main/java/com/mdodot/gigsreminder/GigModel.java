@@ -6,12 +6,14 @@ import java.util.Timer;
 public class GigModel {
     private String band;
     private String town;
-//    private Date date;
-//    private Timer time;
+    private String date;
+    private String time;
 
-    public GigModel(String band, String town) {
+    public GigModel(String band, String town, String date, String time) {
         this.band = band;
         this.town = town;
+        this.date = date;
+        this.time = time;
     }
 
     public String getTown() { return town; }
@@ -24,19 +26,11 @@ public class GigModel {
         this.band = band;
     }
 
-//    public Date getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(Date date) {
-//        this.date = date;
-//    }
-//
-//    public Timer getTime() {
-//        return time;
-//    }
-//
-//    public void setTime(Timer time) {
-//        this.time = time;
-//    }
+    public String getDate() { return date; }
+
+    public void setDate(String date) { this.date = date; }
+
+    public String getTime() { return time; }
+
+    public void setTime(String time) { this.time = time; }
 }
