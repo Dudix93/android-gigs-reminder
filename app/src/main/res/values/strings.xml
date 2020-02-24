@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GigsReminder</string>
+    <string name="band_error">Enter Band Name</string>
+    <string name="town_error">Enter Town Name</string>
+    <string name="date_error">Enter Valid Date DD/MM/YYYY</string>
+    <string name="time_error">Enter Valid Time</string>
 </resources>

@@ -38,8 +38,8 @@ public class CustomAdapter extends ArrayAdapter<GigModel>  {
             convertView = inflater.inflate(R.layout.array_list_item, parent, false);
             viewHolder.band = (TextView) convertView.findViewById(R.id.band_name);
             viewHolder.town = (TextView) convertView.findViewById(R.id.town);
-            viewHolder.town = (TextView) convertView.findViewById(R.id.eventDate);
-            viewHolder.town = (TextView) convertView.findViewById(R.id.eventTime);
+            viewHolder.date = (TextView) convertView.findViewById(R.id.eventDate);
+            viewHolder.time = (TextView) convertView.findViewById(R.id.eventTime);
             result = convertView;
             convertView.setTag(viewHolder);
         } else {
@@ -49,8 +49,8 @@ public class CustomAdapter extends ArrayAdapter<GigModel>  {
 
         viewHolder.band.setText(gigModel.getBand());
         viewHolder.town.setText(gigModel.getTown());
-        viewHolder.town.setText(gigModel.getDate());
-        viewHolder.town.setText(gigModel.getTime());
+        viewHolder.date.setText(gigModel.getDate());
+        viewHolder.time.setText(gigModel.getTime());
 
         return convertView;
     }

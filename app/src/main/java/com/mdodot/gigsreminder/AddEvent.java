@@ -13,16 +13,22 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 
 public class AddEvent extends AppCompatActivity {
 
+    private AwesomeValidation awesomeValidation;
+    public EditText editTextBand, editTextTown, editTextDate, editTextTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         final EditText date = (EditText) findViewById(R.id.EventDateValue);
         final EditText time = (EditText) findViewById(R.id.EventTimeValue);
         date.setInputType(InputType.TYPE_NULL);
@@ -67,16 +73,25 @@ public class AddEvent extends AppCompatActivity {
     }
 
     public void saveEvent(View view) {
-        final String band = ((EditText) findViewById(R.id.BandValue)).getText().toString();
-        final String town = ((EditText) findViewById(R.id.TownValue)).getText().toString();
-        final String date = ((EditText) findViewById(R.id.EventDateValue)).getText().toString();
-        final String time = ((EditText) findViewById(R.id.EventTimeValue)).getText().toString();
-        Intent data = new Intent();
-        data.putExtra("bandName", band);
-        data.putExtra("townName", town);
-        data.putExtra("eventDate", date);
-        data.putExtra("eventTime", time);
-        setResult(RESULT_OK, data);
-        finish();
+        boolean formIsValid = false;
+        editTextBand = (EditText) findViewById(R.id.BandValue);
+        editTextTown = (EditText) findViewById(R.id.TownValue);
+        editTextDate = (EditText) findViewById(R.id.EventDateValue);
+        editTextTime = (EditText) findViewById(R.id.EventTimeValue);
+
+        awesomeValidation.addValidation(this, editTextBand.getId(), "(.|\\s)*\\S(.|\\s)*", R.string.band_error );
+        awesomeValidation.addValidation(this, editTextTown.getId(), "(.|\\s)*\\S(.|\\s)*", R.string.town_error );
+        awesomeValidation.addValidation(this, editTextDate.getId(), "^(10|[1-9]|[0-2][1-9]|[3][0-1])\\/(10|[1-9]|[0-1][1-2])\\/[2][0][0-2][0-5]$", R.string.date_error );
+        awesomeValidation.addValidation(this, editTextTime.getId(), "^([1-9]|1[0-9]|2[0-3]):[0-5][0-9]$", R.string.time_error );
+
+        if (awesomeValidation.validate()) {
+            Intent data = new Intent();
+            data.putExtra("bandName", editTextBand.getText().toString());
+            data.putExtra("townName", editTextTown.getText().toString());
+            data.putExtra("eventDate", editTextDate.getText().toString());
+            data.putExtra("eventTime", editTextTime.getText().toString());
+            setResult(RESULT_OK, data);
+            finish();
+        }
     }
 }
