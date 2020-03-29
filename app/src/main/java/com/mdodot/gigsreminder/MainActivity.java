@@ -34,18 +34,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
-        case R.id.add_event:
-            Intent intent = new Intent(this, AddEvent.class);
-            startActivityForResult(intent, REQUEST_CODE);
-            return(true);
-        case R.id.venues:
-            Snackbar.make(this.findViewById(android.R.id.content), "b", 2000).show();
-            return(true);
-        case R.id.settings:
-            Snackbar.make(this.findViewById(android.R.id.content), "c", 2000).show();
-            return(true);
-    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+            switch(item.getItemId()) {
+                case R.id.add_event:
+                    intent = new Intent(this, AddEvent.class);
+                    startActivityForResult(intent, REQUEST_CODE);
+                    return(true);
+                case R.id.venues:
+                    intent = new Intent(this, AddVenue.class);
+                    startActivityForResult(intent, REQUEST_CODE);
+                    return(true);
+                case R.id.settings:
+                    Snackbar.make(this.findViewById(android.R.id.content), "c", 2000).show();
+                    return(true);
+            }
         return(super.onOptionsItemSelected(item));
     }
 

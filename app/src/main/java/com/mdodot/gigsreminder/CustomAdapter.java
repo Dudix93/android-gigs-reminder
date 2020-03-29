@@ -21,7 +21,7 @@ public class CustomAdapter extends ArrayAdapter<GigModel>  {
     }
 
     public CustomAdapter(ArrayList<GigModel> data, Context context){
-        super(context, R.layout.array_list_item, data);
+        super(context, R.layout.array_list_item_gigs, data);
         this.dataSet = data;
         this.mContext = context;
     }
@@ -35,7 +35,7 @@ public class CustomAdapter extends ArrayAdapter<GigModel>  {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.array_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.array_list_item_gigs, parent, false);
             viewHolder.band = (TextView) convertView.findViewById(R.id.band_name);
             viewHolder.town = (TextView) convertView.findViewById(R.id.town);
             viewHolder.date = (TextView) convertView.findViewById(R.id.eventDate);
