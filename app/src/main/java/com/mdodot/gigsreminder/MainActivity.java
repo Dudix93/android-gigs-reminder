@@ -2,8 +2,10 @@ package com.mdodot.gigsreminder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,11 +20,14 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<GigModel> dataModels;
+    ArrayList<GigModel> gigsList;
     ListView listView;
+    DBHelper dbHelper;
+    DataManager dataManager;
     private static CustomAdapter adapter;
     static final int REQUEST_CODE = 1;
 
@@ -61,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
                     data.getExtras().getString("eventDate"),
                     data.getExtras().getString("eventTime")
             ));
+
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(GigEntry.COL_EVENT_BAND, data.getExtras().getString("bandName"));
+            values.put(GigEntry.COL_EVENT_TOWN, data.getExtras().getString("townName"));
+            values.put(GigEntry.COL_EVENT_DATE, data.getExtras().getString("eventDate"));
+            values.put(GigEntry.COL_EVENT_TIME, data.getExtras().getString("eventTime"));
+            db.insert(GigEntry.TABLE_NAME, null, values);
+            db.close();
         }
     }
 
@@ -68,27 +82,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        dbHelper = new DBHelper(this);
         listView = (ListView)findViewById(R.id.list);
-
-        dataModels = new ArrayList<>();
-
-        DBHelper dbHelper = new DBHelper(this);
-
-        Cursor c = dbHelper.readFromDB();
-        while(c.moveToNext()) {
-            dataModels.add(
-                new GigModel(
-                    c.getString(1),
-                    c.getString(2),
-                    c.getString(3),
-                    c.getString(4)
-                )
-            );
-            c.moveToNext();
-        }
-        adapter = new CustomAdapter(dataModels,getApplicationContext());
+        dataManager = DataManager.getInstance();
+        loadData();
+        adapter = new CustomAdapter(gigsList,getApplicationContext());
         listView.setAdapter(adapter);
+    }
+
+    public void loadData() {
+        dataManager.loadFromDatabase(dbHelper);
+        dataManager.loadGigsFromDatabase(dataManager.gigsCursor);
+        gigsList = dataManager.gigsList;
+    }
+    @Override
+    protected void onDestroy() {
         dbHelper.close();
+        super.onDestroy();
     }
 }
