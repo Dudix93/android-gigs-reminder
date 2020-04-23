@@ -37,7 +37,7 @@ public class DataManager {
             VenueEntry.COL_VENUE_TOWN,
         };
         dm.gigsCursor = db.query(GigEntry.TABLE_NAME, gigColumns, null, null, null, null, null);
-        dm.venuesCursor = db.query(GigEntry.TABLE_NAME, gigColumns, null, null, null, null, null);
+        dm.venuesCursor = db.query(VenueEntry.TABLE_NAME, venueColumns, null, null, null, null, null);
         ;
     }
 

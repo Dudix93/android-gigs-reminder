@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<GigModel>  {
+public class GigsAdapter extends ArrayAdapter<GigModel>  {
     private ArrayList<GigModel> dataSet;
     Context mContext;
 
@@ -20,7 +20,7 @@ public class CustomAdapter extends ArrayAdapter<GigModel>  {
         TextView time;
     }
 
-    public CustomAdapter(ArrayList<GigModel> data, Context context){
+    public GigsAdapter(ArrayList<GigModel> data, Context context){
         super(context, R.layout.array_list_item_gigs, data);
         this.dataSet = data;
         this.mContext = context;

@@ -22,13 +22,13 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class GigsActivity extends AppCompatActivity {
 
     ArrayList<GigModel> gigsList;
     ListView listView;
     DBHelper dbHelper;
     DataManager dataManager;
-    private static CustomAdapter adapter;
+    private static GigsAdapter adapter;
     static final int REQUEST_CODE = 1;
 
     @Override
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(intent, REQUEST_CODE);
                     return(true);
                 case R.id.venues:
-                    intent = new Intent(this, AddVenue.class);
+                    intent = new Intent(this, VenuesActivity.class);
                     startActivityForResult(intent, REQUEST_CODE);
                     return(true);
                 case R.id.settings:
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.list);
         dataManager = DataManager.getInstance();
         loadData();
-        adapter = new CustomAdapter(gigsList,getApplicationContext());
+        adapter = new GigsAdapter(gigsList,getApplicationContext());
         listView.setAdapter(adapter);
     }
 
