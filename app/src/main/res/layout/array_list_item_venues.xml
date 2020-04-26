@@ -1,34 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent" android:layout_height="80dp">
+<!-- Bottom View Start-->
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:background="#66ddff00"
+    android:id="@+id/bottom_wrapper"
+    android:layout_width="160dp"
+    android:weightSum="1"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/venue_name"
+    <ImageView
+        android:id="@+id/editIcon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:layout_margin="10dp"
-        android:text="The Key club"
-        />
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_edit"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        android:background="@color/colorEdit"/>
 
-    <TextView
-        android:id="@+id/town"
+    <ImageView
+        android:id="@+id/deleteIcon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:textSize="25sp"
-        android:layout_margin="10dp"
-        android:text="Leeds"
-        />
-
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_delete"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        android:background="@color/colorDelete"/>
 
 </LinearLayout>
+<!-- Bottom View End-->
+
+<!-- Surface View Start -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/venue_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_margin="10dp"
+                android:text="The Key club"
+                />
+
+            <TextView
+                android:id="@+id/town"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textSize="25sp"
+                android:layout_margin="10dp"
+                android:text="Leeds"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+<!-- Surface View End -->
+</com.daimajia.swipe.SwipeLayout>

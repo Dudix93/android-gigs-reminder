@@ -66,7 +66,7 @@ public class VenuesActivity extends AppCompatActivity {
 
     public void loadData() {
         dataManager.loadFromDatabase(dbHelper);
-        dataManager.loadGigsFromDatabase(dataManager.venuesCursor);
+        dataManager.loadVenuesFromDatabase(dataManager.venuesCursor);
         venuesList = dataManager.venuesList;
     }
     @Override

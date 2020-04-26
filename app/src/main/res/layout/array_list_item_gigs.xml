@@ -1,76 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent" android:layout_height="80dp">
+<!-- Bottom View Start-->
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/band_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:layout_margin="10dp"
-        />
-
-    <TextView
-        android:id="@+id/town"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:textSize="25sp"
-        android:layout_margin="10dp"
-        />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:background="#66ddff00"
+    android:id="@+id/bottom_wrapper"
+    android:layout_width="160dp"
+    android:weightSum="1"
+    android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/timeIcon"
+            android:id="@+id/editIcon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_calendar"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="120sp"
-            />
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_edit"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:background="@color/colorEdit"/>
 
         <ImageView
-            android:id="@+id/dateIcon"
+            android:id="@+id/deleteIcon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_clock"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="200sp"
-            />
-
-        <TextView
-            android:id="@+id/eventTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="150sp"
-            android:icon="@drawable/ic_calendar"
-            />
-
-        <TextView
-            android:id="@+id/eventDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginRight="10sp"
-            android:layout_alignParentRight="true"
-            />
-
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_delete"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:background="@color/colorDelete"/>
 
 </LinearLayout>
+<!-- Bottom View End-->
+
+<!-- Surface View Start -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/band_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_margin="10dp"
+            />
+
+        <TextView
+            android:id="@+id/town"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="25sp"
+            android:layout_margin="10dp"
+            />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/timeIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="120sp"
+                />
+
+            <ImageView
+                android:id="@+id/dateIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_clock"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="200sp"
+                />
+
+            <TextView
+                android:id="@+id/eventTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="150sp"
+                android:icon="@drawable/ic_calendar"
+                />
+
+            <TextView
+                android:id="@+id/eventDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginRight="10sp"
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+<!-- Surface View End -->
+</com.daimajia.swipe.SwipeLayout>
