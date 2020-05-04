@@ -29,27 +29,11 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-//    public void saveToDB(String Band, String Town, String Date, String Time) {
-//        SQLiteDatabase database = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COL_EVENT_BAND, Band);
-//        values.put(COL_EVENT_TOWN, Town);
-//        values.put(COL_EVENT_DATE, Date);
-//        values.put(COL_EVENT_TIME, Time);
-//        database.insert(TABLE_EVENT_NAME, null, values);
-//    }
-//
-//    public Cursor readFromDB() {
-//        SQLiteDatabase database = this.getReadableDatabase();
-//
-//        String[] projection = {
-//            COL_EVENT_ID,
-//            COL_EVENT_BAND,
-//            COL_EVENT_TOWN,
-//            COL_EVENT_DATE,
-//            COL_EVENT_TIME
-//        };
-//
-//        return database.query(TABLE_EVENT_NAME, projection, null, null, null, null, null);
-//    }
+    public void deleteGig(SQLiteDatabase sqLiteDatabase, int id) {
+        sqLiteDatabase.execSQL("DELETE FROM  " + GigEntry.TABLE_NAME + " where "+ GigEntry.COL_EVENT_ID + " = " + id);
+    }
+
+    public void deleteVenue(SQLiteDatabase sqLiteDatabase, int id) {
+        sqLiteDatabase.execSQL("DELETE FROM  " + VenueEntry.TABLE_NAME + " where "+ VenueEntry.COL_VENUE_ID + " = " + id);
+    }
 }

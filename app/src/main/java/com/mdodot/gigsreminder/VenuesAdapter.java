@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
     private static class ViewHolder {
         TextView venue;
         TextView town;
+        ImageView edit;
+        ImageView delete;
     }
 
     public VenuesAdapter(ArrayList<VenueModel> data, Context context){
@@ -26,16 +29,18 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        VenueModel venueModel = getItem(position);
-        ViewHolder viewHolder;
+        final VenueModel venueModel = getItem(position);
+        final ViewHolder viewHolder;
         final View result;
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.array_list_item_venues, parent, false);
-            viewHolder.venue = (TextView) convertView.findViewById(R.id.venue_name);
-            viewHolder.town = (TextView) convertView.findViewById(R.id.town);
+            viewHolder.venue = convertView.findViewById(R.id.venue_name);
+            viewHolder.town = convertView.findViewById(R.id.town);
+            viewHolder.edit = convertView.findViewById(R.id.editIcon);
+            viewHolder.delete = convertView.findViewById(R.id.deleteIcon);
             result = convertView;
             convertView.setTag(viewHolder);
         } else {
@@ -45,6 +50,16 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
 
         viewHolder.venue.setText(venueModel.getName());
         viewHolder.town.setText(venueModel.getTown());
+
+        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            private final int venueId = venueModel.getId();
+            @Override
+            public void onClick(View view) {
+                if (mContext instanceof VenuesActivity) {
+                    ((VenuesActivity) mContext).deleteVenue(venueId);
+                }
+            }
+        });
 
         return convertView;
     }

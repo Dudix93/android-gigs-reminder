@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -22,6 +24,7 @@ import java.util.Calendar;
 public class AddEvent extends AppCompatActivity {
 
     private AwesomeValidation awesomeValidation;
+    private DBHelper dbHelper;
     public EditText editTextBand, editTextTown, editTextDate, editTextTime;
 
     @Override
@@ -29,6 +32,7 @@ public class AddEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        dbHelper = new DBHelper(this);
         final EditText date = (EditText) findViewById(R.id.EventDateValue);
         final EditText time = (EditText) findViewById(R.id.EventTimeValue);
         date.setInputType(InputType.TYPE_NULL);
@@ -85,12 +89,15 @@ public class AddEvent extends AppCompatActivity {
         awesomeValidation.addValidation(this, editTextTime.getId(), "^([1-9]|1[0-9]|2[0-3]):[0-5][0-9]$", R.string.time_error );
 
         if (awesomeValidation.validate()) {
-            Intent data = new Intent();
-            data.putExtra("bandName", editTextBand.getText().toString());
-            data.putExtra("townName", editTextTown.getText().toString());
-            data.putExtra("eventDate", editTextDate.getText().toString());
-            data.putExtra("eventTime", editTextTime.getText().toString());
-            setResult(RESULT_OK, data);
+            setResult(RESULT_OK);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(GigEntry.COL_EVENT_BAND, editTextBand.getText().toString());
+            values.put(GigEntry.COL_EVENT_TOWN, editTextTown.getText().toString());
+            values.put(GigEntry.COL_EVENT_DATE, editTextDate.getText().toString());
+            values.put(GigEntry.COL_EVENT_TIME, editTextTime.getText().toString());
+            db.insert(GigEntry.TABLE_NAME, null, values);
+            db.close();
             finish();
         }
     }

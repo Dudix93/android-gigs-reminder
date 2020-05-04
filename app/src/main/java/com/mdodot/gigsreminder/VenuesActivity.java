@@ -30,17 +30,18 @@ public class VenuesActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            adapter.add(new VenueModel(
-                    data.getExtras().getString("venueName"),
-                    data.getExtras().getString("townName")
-            ));
-
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            values.put(VenueEntry.COL_VENUE_NAME, data.getExtras().getString("venueName"));
-            values.put(VenueEntry.COL_VENUE_TOWN, data.getExtras().getString("townName"));
-            db.insert(VenueEntry.TABLE_NAME, null, values);
-            db.close();
+        loadData();
+//            adapter.add(new VenueModel(
+//                    data.getExtras().getString("venueName"),
+//                    data.getExtras().getString("townName")
+//            ));
+//
+//            SQLiteDatabase db = dbHelper.getWritableDatabase();
+//            ContentValues values = new ContentValues();
+//            values.put(VenueEntry.COL_VENUE_NAME, data.getExtras().getString("venueName"));
+//            values.put(VenueEntry.COL_VENUE_TOWN, data.getExtras().getString("townName"));
+//            db.insert(VenueEntry.TABLE_NAME, null, values);
+//            db.close();
         }
     }
 
@@ -49,11 +50,7 @@ public class VenuesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venues);
         dbHelper = new DBHelper(this);
-        listView = (ListView)findViewById(R.id.list);
-        dataManager = DataManager.getInstance();
         loadData();
-        adapter = new VenuesAdapter(venuesList,getApplicationContext());
-        listView.setAdapter(adapter);
         FloatingActionButton fab = findViewById(R.id.addVenue);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,13 +62,24 @@ public class VenuesActivity extends AppCompatActivity {
     }
 
     public void loadData() {
+        listView = (ListView)findViewById(R.id.list);
+        dataManager = DataManager.getInstance();
         dataManager.loadFromDatabase(dbHelper);
         dataManager.loadVenuesFromDatabase(dataManager.venuesCursor);
         venuesList = dataManager.venuesList;
+        adapter = new VenuesAdapter(venuesList,this);
+        listView.setAdapter(adapter);
     }
     @Override
     protected void onDestroy() {
         dbHelper.close();
         super.onDestroy();
+    }
+
+    protected void deleteVenue(int venueId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        dbHelper.deleteVenue(db, venueId);
+        loadData();
+        Snackbar.make(this.findViewById(android.R.id.content), "Venue deleted.", 2000).show();
     }
 }

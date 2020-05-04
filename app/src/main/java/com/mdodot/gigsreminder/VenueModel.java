@@ -1,13 +1,19 @@
 package com.mdodot.gigsreminder;
 
 public class VenueModel {
+    private int Id;
     private String Name;
     private String Town;
 
-    public VenueModel(String name, String town) {
-        Name = name;
-        Town = town;
+    public VenueModel(int id, String name, String town) {
+        this.Id = id;
+        this.Name = name;
+        this.Town = town;
     }
+
+    public int getId() { return Id; }
+
+    public void setId(int id) { Id = id; }
 
     public String getName() {
         return Name;

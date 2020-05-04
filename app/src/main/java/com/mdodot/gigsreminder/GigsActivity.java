@@ -60,21 +60,22 @@ public class GigsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            adapter.add(new GigModel(
-                    data.getExtras().getString("bandName"),
-                    data.getExtras().getString("townName"),
-                    data.getExtras().getString("eventDate"),
-                    data.getExtras().getString("eventTime")
-            ));
-
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            values.put(GigEntry.COL_EVENT_BAND, data.getExtras().getString("bandName"));
-            values.put(GigEntry.COL_EVENT_TOWN, data.getExtras().getString("townName"));
-            values.put(GigEntry.COL_EVENT_DATE, data.getExtras().getString("eventDate"));
-            values.put(GigEntry.COL_EVENT_TIME, data.getExtras().getString("eventTime"));
-            db.insert(GigEntry.TABLE_NAME, null, values);
-            db.close();
+            loadData();
+//            adapter.add(new GigModel(
+//                    data.getExtras().getString("bandName"),
+//                    data.getExtras().getString("townName"),
+//                    data.getExtras().getString("eventDate"),
+//                    data.getExtras().getString("eventTime")
+//            ));
+//
+//            SQLiteDatabase db = dbHelper.getWritableDatabase();
+//            ContentValues values = new ContentValues();
+//            values.put(GigEntry.COL_EVENT_BAND, data.getExtras().getString("bandName"));
+//            values.put(GigEntry.COL_EVENT_TOWN, data.getExtras().getString("townName"));
+//            values.put(GigEntry.COL_EVENT_DATE, data.getExtras().getString("eventDate"));
+//            values.put(GigEntry.COL_EVENT_TIME, data.getExtras().getString("eventTime"));
+//            db.insert(GigEntry.TABLE_NAME, null, values);
+//            db.close();
         }
     }
 
@@ -83,17 +84,24 @@ public class GigsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
-        listView = (ListView)findViewById(R.id.list);
-        dataManager = DataManager.getInstance();
         loadData();
-        adapter = new GigsAdapter(gigsList,getApplicationContext());
-        listView.setAdapter(adapter);
     }
 
     public void loadData() {
+        listView = (ListView)findViewById(R.id.list);
+        dataManager = DataManager.getInstance();
         dataManager.loadFromDatabase(dbHelper);
         dataManager.loadGigsFromDatabase(dataManager.gigsCursor);
         gigsList = dataManager.gigsList;
+        adapter = new GigsAdapter(gigsList, this);
+        listView.setAdapter(adapter);
+    }
+
+    protected  void deleteGig(int gigId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        dbHelper.deleteGig(db, gigId);
+        loadData();
+        Snackbar.make(this.findViewById(android.R.id.content), "Event deleted.", 2000).show();
     }
     @Override
     protected void onDestroy() {

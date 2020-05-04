@@ -1,16 +1,22 @@
 package com.mdodot.gigsreminder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 public class GigsAdapter extends ArrayAdapter<GigModel>  {
     private ArrayList<GigModel> dataSet;
+    private GigModel gigModel;
     Context mContext;
 
     private static class ViewHolder {
@@ -18,6 +24,8 @@ public class GigsAdapter extends ArrayAdapter<GigModel>  {
         TextView town;
         TextView date;
         TextView time;
+        ImageView edit;
+        ImageView delete;
     }
 
     public GigsAdapter(ArrayList<GigModel> data, Context context){
@@ -28,8 +36,8 @@ public class GigsAdapter extends ArrayAdapter<GigModel>  {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        GigModel gigModel = getItem(position);
-        ViewHolder viewHolder;
+        gigModel = getItem(position);
+        final ViewHolder viewHolder;
         final View result;
 
         if (convertView == null) {
@@ -40,6 +48,8 @@ public class GigsAdapter extends ArrayAdapter<GigModel>  {
             viewHolder.town = (TextView) convertView.findViewById(R.id.town);
             viewHolder.date = (TextView) convertView.findViewById(R.id.eventDate);
             viewHolder.time = (TextView) convertView.findViewById(R.id.eventTime);
+            viewHolder.edit = convertView.findViewById(R.id.editIcon);
+            viewHolder.delete = convertView.findViewById(R.id.deleteIcon);
             result = convertView;
             convertView.setTag(viewHolder);
         } else {
@@ -51,6 +61,16 @@ public class GigsAdapter extends ArrayAdapter<GigModel>  {
         viewHolder.town.setText(gigModel.getTown());
         viewHolder.date.setText(gigModel.getDate());
         viewHolder.time.setText(gigModel.getTime());
+
+        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            private final int gigId = gigModel.getId();
+            @Override
+            public void onClick(View view) {
+                if (mContext instanceof GigsActivity) {
+                    ((GigsActivity) mContext).deleteGig(gigId);
+                }
+            }
+        });
 
         return convertView;
     }

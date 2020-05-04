@@ -4,17 +4,23 @@ import java.util.Date;
 import java.util.Timer;
 
 public class GigModel {
+    private int id;
     private String band;
     private String town;
     private String date;
     private String time;
 
-    public GigModel(String band, String town, String date, String time) {
+    public GigModel(int id, String band, String town, String date, String time) {
+        this.id = id;
         this.band = band;
         this.town = town;
         this.date = date;
         this.time = time;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getTown() { return town; }
 
