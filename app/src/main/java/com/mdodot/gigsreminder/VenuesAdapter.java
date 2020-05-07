@@ -61,6 +61,16 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
             }
         });
 
+        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            private final VenueModel venue = venueModel;
+            @Override
+            public void onClick(View view) {
+                if (mContext instanceof VenuesActivity) {
+                    ((VenuesActivity) mContext).editVenue(venue);
+                }
+            }
+        });
+
         return convertView;
     }
 }

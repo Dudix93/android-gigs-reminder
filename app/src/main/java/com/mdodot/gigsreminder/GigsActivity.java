@@ -28,6 +28,8 @@ public class GigsActivity extends AppCompatActivity {
     ListView listView;
     DBHelper dbHelper;
     DataManager dataManager;
+    Intent intent;
+    SQLiteDatabase db;
     private static GigsAdapter adapter;
     static final int REQUEST_CODE = 1;
 
@@ -40,7 +42,6 @@ public class GigsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
             switch(item.getItemId()) {
                 case R.id.add_event:
                     intent = new Intent(this, AddEvent.class);
@@ -61,21 +62,6 @@ public class GigsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             loadData();
-//            adapter.add(new GigModel(
-//                    data.getExtras().getString("bandName"),
-//                    data.getExtras().getString("townName"),
-//                    data.getExtras().getString("eventDate"),
-//                    data.getExtras().getString("eventTime")
-//            ));
-//
-//            SQLiteDatabase db = dbHelper.getWritableDatabase();
-//            ContentValues values = new ContentValues();
-//            values.put(GigEntry.COL_EVENT_BAND, data.getExtras().getString("bandName"));
-//            values.put(GigEntry.COL_EVENT_TOWN, data.getExtras().getString("townName"));
-//            values.put(GigEntry.COL_EVENT_DATE, data.getExtras().getString("eventDate"));
-//            values.put(GigEntry.COL_EVENT_TIME, data.getExtras().getString("eventTime"));
-//            db.insert(GigEntry.TABLE_NAME, null, values);
-//            db.close();
         }
     }
 
@@ -98,11 +84,22 @@ public class GigsActivity extends AppCompatActivity {
     }
 
     protected  void deleteGig(int gigId) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db = dbHelper.getWritableDatabase();
         dbHelper.deleteGig(db, gigId);
         loadData();
         Snackbar.make(this.findViewById(android.R.id.content), "Event deleted.", 2000).show();
     }
+
+    public void editGig(GigModel gigModel) {
+        intent = new Intent(this, AddEvent.class);
+        intent.putExtra("eventId", gigModel.getId());
+        intent.putExtra("eventBand", gigModel.getBand());
+        intent.putExtra("eventTown", gigModel.getTown());
+        intent.putExtra("eventTime", gigModel.getTime());
+        intent.putExtra("eventDate", gigModel.getDate());
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
     @Override
     protected void onDestroy() {
         dbHelper.close();

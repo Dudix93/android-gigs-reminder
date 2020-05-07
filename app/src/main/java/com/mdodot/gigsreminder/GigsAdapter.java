@@ -72,6 +72,16 @@ public class GigsAdapter extends ArrayAdapter<GigModel>  {
             }
         });
 
+        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            private final GigModel event = gigModel;
+            @Override
+            public void onClick(View view) {
+                if (mContext instanceof GigsActivity) {
+                    ((GigsActivity) mContext).editGig(event);
+                }
+            }
+        });
+
         return convertView;
     }
 }

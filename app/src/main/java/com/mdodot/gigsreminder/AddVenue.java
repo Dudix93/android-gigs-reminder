@@ -23,7 +23,8 @@ public class AddVenue extends AppCompatActivity {
 
     private AwesomeValidation awesomeValidation;
     private DBHelper dbHelper;
-    public EditText editTextTown, editTextVenue;
+    private EditText editTextTown, editTextVenue;
+    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +32,41 @@ public class AddVenue extends AppCompatActivity {
         setContentView(R.layout.activity_add_venue);
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         dbHelper = new DBHelper(this);
+        editTextTown = (EditText) findViewById(R.id.TownValue);
+        editTextVenue = (EditText) findViewById(R.id.VenueValue);
+        extras = getIntent().getExtras();
+        populateFieldsToEdit();
     }
 
     public void saveEvent(View view) {
         boolean formIsValid = false;
-        editTextTown = (EditText) findViewById(R.id.TownValue);
-        editTextVenue = (EditText) findViewById(R.id.VenueValue);
 
         awesomeValidation.addValidation(this, editTextTown.getId(), "(.|\\s)*\\S(.|\\s)*", R.string.town_error );
         awesomeValidation.addValidation(this, editTextVenue.getId(), "(.|\\s)*\\S(.|\\s)*", R.string.venue_error );
 
         if (awesomeValidation.validate()) {
-//            Intent data = new Intent();
-//            data.putExtra("venueName", editTextTown.getText().toString());
-//            data.putExtra("townName", editTextVenue.getText().toString());
             setResult(RESULT_OK);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(VenueEntry.COL_VENUE_NAME, editTextVenue.getText().toString());
             values.put(VenueEntry.COL_VENUE_TOWN, editTextTown.getText().toString());
-            db.insert(VenueEntry.TABLE_NAME, null, values);
+
+            if (extras == null) {
+                db.insert(VenueEntry.TABLE_NAME, null, values);
+            }
+            else {
+                db.update(VenueEntry.TABLE_NAME, values, VenueEntry.COL_VENUE_ID + "=" + extras.get("venueId"), null);
+            }
+
             db.close();
             finish();
+        }
+    }
+
+    private void populateFieldsToEdit() {
+        if (extras != null) {
+            editTextVenue.setText(extras.getString("venueName"));
+            editTextTown.setText(extras.getString("venueTown"));
         }
     }
 }

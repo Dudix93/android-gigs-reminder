@@ -25,19 +25,27 @@ public class AddEvent extends AppCompatActivity {
 
     private AwesomeValidation awesomeValidation;
     private DBHelper dbHelper;
-    public EditText editTextBand, editTextTown, editTextDate, editTextTime;
+    private EditText editTextBand, editTextTown, editTextDate, editTextTime;
+    private Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+        editTextBand = (EditText) findViewById(R.id.BandValue);
+        editTextTown = (EditText) findViewById(R.id.TownValue);
+        editTextDate = (EditText) findViewById(R.id.EventDateValue);
+        editTextTime = (EditText) findViewById(R.id.EventTimeValue);
+        extras = getIntent().getExtras();
+
+        populateFieldsToEdit();
+
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         dbHelper = new DBHelper(this);
-        final EditText date = (EditText) findViewById(R.id.EventDateValue);
-        final EditText time = (EditText) findViewById(R.id.EventTimeValue);
-        date.setInputType(InputType.TYPE_NULL);
-        time.setInputType(InputType.TYPE_NULL);
-        date.setOnClickListener(new View.OnClickListener() {
+
+        editTextDate.setInputType(InputType.TYPE_NULL);
+        editTextTime.setInputType(InputType.TYPE_NULL);
+        editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
@@ -49,14 +57,14 @@ public class AddEvent extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                editTextDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                             }
                         },
                 year, month, day);
                 picker.show();
             }
         });
-        time.setOnClickListener(new View.OnClickListener() {
+        editTextTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
@@ -67,7 +75,7 @@ public class AddEvent extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 String minutes = minute < 10 ? "0" + String.valueOf(minute) : String.valueOf(minute);
-                                time.setText(String.valueOf(hourOfDay) + ":" + minutes);
+                                editTextTime.setText(String.valueOf(hourOfDay) + ":" + minutes);
                             }
                         },
                         hour, minute, true);
@@ -76,12 +84,17 @@ public class AddEvent extends AppCompatActivity {
         });
     }
 
+    private void populateFieldsToEdit() {
+        if (extras != null) {
+            editTextBand.setText(extras.getString("eventBand"));
+            editTextTown.setText(extras.getString("eventTown"));
+            editTextTime.setText(extras.getString("eventTime"));
+            editTextDate.setText(extras.getString("eventDate"));
+        }
+    }
+
     public void saveEvent(View view) {
         boolean formIsValid = false;
-        editTextBand = (EditText) findViewById(R.id.BandValue);
-        editTextTown = (EditText) findViewById(R.id.TownValue);
-        editTextDate = (EditText) findViewById(R.id.EventDateValue);
-        editTextTime = (EditText) findViewById(R.id.EventTimeValue);
 
         awesomeValidation.addValidation(this, editTextBand.getId(), "(.|\\s)*\\S(.|\\s)*", R.string.band_error );
         awesomeValidation.addValidation(this, editTextTown.getId(), "(.|\\s)*\\S(.|\\s)*", R.string.town_error );
@@ -96,7 +109,13 @@ public class AddEvent extends AppCompatActivity {
             values.put(GigEntry.COL_EVENT_TOWN, editTextTown.getText().toString());
             values.put(GigEntry.COL_EVENT_DATE, editTextDate.getText().toString());
             values.put(GigEntry.COL_EVENT_TIME, editTextTime.getText().toString());
-            db.insert(GigEntry.TABLE_NAME, null, values);
+
+            if (extras == null) {
+                db.insert(GigEntry.TABLE_NAME, null, values);
+            }
+            else {
+                db.update(GigEntry.TABLE_NAME, values, GigEntry.COL_EVENT_ID + "=" + extras.get("eventId"), null);
+            }
             db.close();
             finish();
         }
