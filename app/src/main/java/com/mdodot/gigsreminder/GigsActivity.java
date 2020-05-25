@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GigsActivity extends AppCompatActivity {
@@ -36,26 +38,9 @@ public class GigsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_sorting, menu);
         inflater.inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-            switch(item.getItemId()) {
-                case R.id.add_event:
-                    intent = new Intent(this, AddEvent.class);
-                    startActivityForResult(intent, REQUEST_CODE);
-                    return(true);
-                case R.id.venues:
-                    intent = new Intent(this, VenuesActivity.class);
-                    startActivityForResult(intent, REQUEST_CODE);
-                    return(true);
-                case R.id.settings:
-                    Snackbar.make(this.findViewById(android.R.id.content), "c", 2000).show();
-                    return(true);
-            }
-        return(super.onOptionsItemSelected(item));
     }
 
     @Override
@@ -101,8 +86,74 @@ public class GigsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.add_event:
+                intent = new Intent(this, AddEvent.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                return(true);
+            case R.id.venues:
+                intent = new Intent(this, VenuesActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                return(true);
+            case R.id.settings:
+                Snackbar.make(this.findViewById(android.R.id.content), "c", 2000).show();
+                return(true);
+            case R.id.sort_band_asc:
+                isMenuItemChecked(item);
+                adapter.sort(new Comparator<GigModel>() {
+                    @Override
+                    public int compare(GigModel gig1, GigModel gig2) {
+                        return gig1.getBand().compareTo(gig2.getBand());
+                    }
+                });
+                return(true);
+            case R.id.sort_band_desc:
+                isMenuItemChecked(item);
+                adapter.sort(new Comparator<GigModel>() {
+                    @Override
+                    public int compare(GigModel gig1, GigModel gig2) {
+                        return gig1.getBand().compareTo(gig2.getBand());
+                    }
+                });
+                Collections.reverse(gigsList);
+                adapter = new GigsAdapter(gigsList, this);
+                listView.setAdapter(adapter);
+                return(true);
+            case R.id.sort_date_asc:
+                isMenuItemChecked(item);
+                adapter.sort(new Comparator<GigModel>() {
+                    @Override
+                    public int compare(GigModel gig1, GigModel gig2) {
+                        return gig1.getDate().compareTo(gig2.getDate());
+                    }
+                });
+                Collections.reverse(gigsList);
+                adapter = new GigsAdapter(gigsList, this);
+                listView.setAdapter(adapter);
+                return(true);
+            case R.id.sort_date_desc:
+                isMenuItemChecked(item);
+                adapter.sort(new Comparator<GigModel>() {
+                    @Override
+                    public int compare(GigModel gig1, GigModel gig2) {
+                        return gig1.getDate().compareTo(gig2.getDate());
+                    }
+                });
+                return(true);
+        }
+        return(super.onOptionsItemSelected(item));
+    }
+
+    @Override
     protected void onDestroy() {
         dbHelper.close();
         super.onDestroy();
+    }
+
+    protected void isMenuItemChecked(MenuItem item) {
+        if (!item.isChecked()) {
+            item.setChecked(true);
+        }
     }
 }

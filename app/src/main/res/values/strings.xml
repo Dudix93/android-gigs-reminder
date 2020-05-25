@@ -5,4 +5,5 @@
     <string name="date_error">Enter Valid Date DD/MM/YYYY</string>
     <string name="time_error">Enter Valid Time</string>
     <string name="venue_error">Enter Venue Name</string>
+    <string name="sorting_methods">Sort By:</string>
 </resources>
