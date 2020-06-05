@@ -2,19 +2,13 @@ package com.mdodot.gigsreminder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.google.android.material.snackbar.Snackbar;
@@ -22,7 +16,6 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class GigsActivity extends AppCompatActivity {
 
@@ -38,7 +31,7 @@ public class GigsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_sorting, menu);
+        inflater.inflate(R.menu.menu_sorting_gigs, menu);
         inflater.inflate(R.menu.menu_main, menu);
         return true;
     }

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/sorting_menu"
+        android:id="@+id/menu_sorting_gigs"
         android:icon="@drawable/ic_filter"
         android:title="actions"
         app:showAsAction="ifRoom">

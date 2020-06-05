@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_sorting_gigs"
+        android:icon="@drawable/ic_filter"
+        android:title="actions"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/sorting_methods"
+                android:title="@string/sorting_methods"
+                />
+            <group
+                android:id="@+id/sorting"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sort_venue_asc"
+                    android:title="Venue (A-Z)"
+                    app:showAsAction="never"
+                    android:icon="@drawable/ic_sort_by_alpha"
+                    />
+                <item
+                    android:id="@+id/sort_venue_desc"
+                    android:title="Venue (Z-A)"
+                    app:showAsAction="never"
+                    android:icon="@drawable/ic_sort_by_alpha"
+                    />
+                <item
+                    android:id="@+id/sort_town_asc"
+                    android:title="Town (A-Z)"
+                    app:showAsAction="never"
+                    android:icon="@drawable/ic_sort_by_alpha"
+                    />
+                <item
+                    android:id="@+id/sort_town_desc"
+                    android:title="Town (Z-A)"
+                    app:showAsAction="never"
+                    android:icon="@drawable/ic_sort_by_alpha"
+                    />
+            </group>
+`        </menu>
+    </item>
+</menu>
