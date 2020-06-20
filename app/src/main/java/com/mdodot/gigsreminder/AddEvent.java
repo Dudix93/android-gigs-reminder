@@ -1,6 +1,7 @@
 package com.mdodot.gigsreminder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -80,6 +81,17 @@ public class AddEvent extends AppCompatActivity {
                         },
                         hour, minute, true);
                 picker.show();
+            }
+        });
+
+        Toolbar toolbar = findViewById(R.id.addGigToolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setTitle(R.string.event_add);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

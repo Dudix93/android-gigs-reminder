@@ -1,6 +1,7 @@
 package com.mdodot.gigsreminder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -104,6 +105,17 @@ public class VenuesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), AddVenue.class);
                 startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
+        Toolbar toolbar = findViewById(R.id.venuesToolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setTitle(R.string.venues_list);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

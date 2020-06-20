@@ -1,6 +1,7 @@
 package com.mdodot.gigsreminder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -49,6 +50,9 @@ public class GigsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
         loadData();
+        Toolbar toolbar = findViewById(R.id.gigsToolbar);
+        toolbar.setTitle(R.string.events_list);
+        setSupportActionBar(toolbar);
     }
 
     public void loadData() {
