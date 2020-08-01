@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
@@ -36,6 +37,17 @@ public class AddVenue extends AppCompatActivity {
         editTextVenue = (EditText) findViewById(R.id.VenueValue);
         extras = getIntent().getExtras();
         populateFieldsToEdit();
+
+        Toolbar toolbar = findViewById(R.id.addVenueToolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setTitle(extras != null ? R.string.venue_edit : R.string.venue_add);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void saveEvent(View view) {

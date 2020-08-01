@@ -86,7 +86,7 @@ public class AddEvent extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.addGigToolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setTitle(R.string.event_add);
+        toolbar.setTitle(extras != null ? R.string.event_edit : R.string.event_add);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

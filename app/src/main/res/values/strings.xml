@@ -7,7 +7,9 @@
     <string name="hour">Hour</string>
     <string name="settings">Settings</string>
     <string name="event_add">Add event</string>
+    <string name="event_edit">Edit event</string>
     <string name="venue_add">Add venue</string>
+    <string name="venue_edit">Edit venue</string>
     <string name="events_list">Events list</string>
     <string name="venues_list">Venues list</string>
     <string name="band_error">Enter Band Name</string>
