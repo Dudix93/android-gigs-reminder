@@ -14,9 +14,12 @@ import android.widget.ListView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 public class GigsActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class GigsActivity extends AppCompatActivity {
     SQLiteDatabase db;
     private static GigsAdapter adapter;
     static final int REQUEST_CODE = 1;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,24 +121,40 @@ public class GigsActivity extends AppCompatActivity {
                 adapter = new GigsAdapter(gigsList, this);
                 listView.setAdapter(adapter);
                 return(true);
-            case R.id.sort_date_asc:
+            case R.id.sort_date_desc:
                 isMenuItemChecked(item);
                 adapter.sort(new Comparator<GigModel>() {
                     @Override
                     public int compare(GigModel gig1, GigModel gig2) {
-                        return gig1.getDate().compareTo(gig2.getDate());
+                        try {
+                            Date dateOne = sdf.parse(gig1.getDate().replace("/","-"));
+                            Date dateTwo = sdf.parse(gig2.getDate().replace("/","-"));
+                            return dateOne.compareTo(dateTwo);
+                        }
+                        catch (ParseException ex) {
+                            ex.printStackTrace();
+                            return 0;
+                        }
                     }
                 });
                 Collections.reverse(gigsList);
                 adapter = new GigsAdapter(gigsList, this);
                 listView.setAdapter(adapter);
                 return(true);
-            case R.id.sort_date_desc:
+            case R.id.sort_date_asc:
                 isMenuItemChecked(item);
                 adapter.sort(new Comparator<GigModel>() {
                     @Override
                     public int compare(GigModel gig1, GigModel gig2) {
-                        return gig1.getDate().compareTo(gig2.getDate());
+                        try {
+                            Date dateOne = sdf.parse(gig1.getDate().replace("/","-"));
+                            Date dateTwo = sdf.parse(gig2.getDate().replace("/","-"));
+                            return dateOne.compareTo(dateTwo);
+                        }
+                        catch (ParseException ex) {
+                            ex.printStackTrace();
+                            return 0;
+                        }
                     }
                 });
                 return(true);
