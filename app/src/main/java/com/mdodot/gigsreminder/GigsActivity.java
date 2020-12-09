@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
@@ -57,6 +59,14 @@ public class GigsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.gigsToolbar);
         toolbar.setTitle(R.string.events_list);
         setSupportActionBar(toolbar);
+        FloatingActionButton fab = findViewById(R.id.addEvent);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), AddEvent.class);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
     }
 
     public void loadData() {
@@ -89,10 +99,6 @@ public class GigsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.add_event:
-                intent = new Intent(this, AddEvent.class);
-                startActivityForResult(intent, REQUEST_CODE);
-                return(true);
             case R.id.venues:
                 intent = new Intent(this, VenuesActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);

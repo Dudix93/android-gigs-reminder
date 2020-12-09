@@ -8,12 +8,6 @@
         app:showAsAction="ifRoom">
         <menu>
             <item
-                android:id="@+id/add_event"
-                android:title="Add event"
-                app:showAsAction="never"
-                android:icon="@drawable/ic_calendar"
-                />
-            <item
                 android:id="@+id/venues"
                 android:title="Venues"
                 app:showAsAction="never"
