@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">GigsReminder</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <string name="venue">Venues</string>
     <string name="band">Band</string>
     <string name="town">Town</string>
@@ -18,4 +20,6 @@
     <string name="time_error">Enter Valid Time</string>
     <string name="venue_error">Enter Venue Name</string>
     <string name="sorting_methods">Sort By:</string>
+    <string name="event_delete">Delete event?</string>
+    <string name="venue_delete">Delete venue?</string>
 </resources>

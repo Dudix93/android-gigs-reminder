@@ -1,23 +1,31 @@
 package com.mdodot.gigsreminder;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class GigsAdapter extends ArrayAdapter<GigModel>  {
+public class GigsAdapter extends ArrayAdapter<GigModel> {
     private ArrayList<GigModel> dataSet;
     private GigModel gigModel;
-    Context mContext;
+    private Context mContext;
 
     private static class ViewHolder {
         TextView band;
@@ -67,7 +75,11 @@ public class GigsAdapter extends ArrayAdapter<GigModel>  {
             @Override
             public void onClick(View view) {
                 if (mContext instanceof GigsActivity) {
-                    ((GigsActivity) mContext).deleteGig(gigId);
+                    DialogFragment deleteGigFragment = new DeleteGigDialogFragment();
+                    Bundle args = new Bundle();
+                    args.putInt("gigId", gigId);
+                    deleteGigFragment.setArguments(args);
+                    deleteGigFragment.show(((GigsActivity) mContext).getSupportFragmentManager(), "deleteGig");
                 }
             }
         });
@@ -82,6 +94,37 @@ public class GigsAdapter extends ArrayAdapter<GigModel>  {
             }
         });
 
+        convertView.findViewById(R.id.gig_entry).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(view.getContext(), GigActivity.class));
+            }
+        });
+
         return convertView;
+    }
+
+    public static class DeleteGigDialogFragment extends DialogFragment {
+        private int gigId;
+
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            gigId = getArguments().getInt("gigId");
+            builder.setMessage(R.string.event_delete)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ((GigsActivity)getActivity()).deleteGig(gigId);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //User cancelled the dialog
+                        }
+                    });
+            return builder.create();
+        }
     }
 }

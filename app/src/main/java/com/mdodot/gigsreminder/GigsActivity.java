@@ -79,7 +79,7 @@ public class GigsActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    protected  void deleteGig(int gigId) {
+    protected void deleteGig(int gigId) {
         db = dbHelper.getWritableDatabase();
         dbHelper.deleteGig(db, gigId);
         loadData();
