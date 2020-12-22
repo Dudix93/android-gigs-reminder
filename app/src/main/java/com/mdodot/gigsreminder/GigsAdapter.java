@@ -1,10 +1,6 @@
 package com.mdodot.gigsreminder;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,11 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -75,9 +67,10 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
             @Override
             public void onClick(View view) {
                 if (mContext instanceof GigsActivity) {
-                    DialogFragment deleteGigFragment = new DeleteGigDialogFragment();
+                    DialogFragment deleteGigFragment = new DeleteDialogFragment();
                     Bundle args = new Bundle();
-                    args.putInt("gigId", gigId);
+                    args.putInt("id", gigId);
+                    args.putInt("msg", R.string.event_delete);
                     deleteGigFragment.setArguments(args);
                     deleteGigFragment.show(((GigsActivity) mContext).getSupportFragmentManager(), "deleteGig");
                 }
@@ -102,29 +95,5 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
         });
 
         return convertView;
-    }
-
-    public static class DeleteGigDialogFragment extends DialogFragment {
-        private int gigId;
-
-        @Override
-        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            gigId = getArguments().getInt("gigId");
-            builder.setMessage(R.string.event_delete)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ((GigsActivity)getActivity()).deleteGig(gigId);
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //User cancelled the dialog
-                        }
-                    });
-            return builder.create();
-        }
     }
 }
