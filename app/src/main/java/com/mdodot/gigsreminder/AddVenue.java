@@ -40,11 +40,12 @@ public class AddVenue extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.addVenueToolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setTitle(extras != null ? R.string.venue_edit : R.string.venue_add);
+        toolbar.setTitle(extras.get("venueId") != null && extras.get("venueId") != "" ? R.string.venue_edit : R.string.venue_add);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if ((Boolean) extras.get("FromAddEventActivity")) startActivity(new Intent(view.getContext(), AddEvent.class));
                 finish();
             }
         });
@@ -63,14 +64,15 @@ public class AddVenue extends AppCompatActivity {
             values.put(VenueEntry.COL_VENUE_NAME, editTextVenue.getText().toString());
             values.put(VenueEntry.COL_VENUE_TOWN, editTextTown.getText().toString());
 
-            if (extras == null) {
-                db.insert(VenueEntry.TABLE_NAME, null, values);
+            if (extras.get("venueId") != null && extras.get("venueId") != "") {
+                db.update(VenueEntry.TABLE_NAME, values, VenueEntry.COL_VENUE_ID + "=" + extras.get("venueId"), null);
             }
             else {
-                db.update(VenueEntry.TABLE_NAME, values, VenueEntry.COL_VENUE_ID + "=" + extras.get("venueId"), null);
+                db.insert(VenueEntry.TABLE_NAME, null, values);
             }
 
             db.close();
+            if ((Boolean) extras.get("FromAddEventActivity")) startActivity(new Intent(view.getContext(), AddEvent.class));
             finish();
         }
     }

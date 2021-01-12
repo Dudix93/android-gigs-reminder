@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">GigsReminder</string>
     <string name="ok">OK</string>
+    <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    <string name="venue">Venues</string>
+    <string name="venues">Venues</string>
+    <string name="venue">Venue</string>
     <string name="band">Band</string>
     <string name="town">Town</string>
     <string name="date">Date</string>

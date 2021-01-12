@@ -42,8 +42,8 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
             convertView = inflater.inflate(R.layout.array_list_item_venues, parent, false);
             viewHolder.venue = convertView.findViewById(R.id.venue_name);
             viewHolder.town = convertView.findViewById(R.id.town);
-            viewHolder.edit = convertView.findViewById(R.id.editIcon);
-            viewHolder.delete = convertView.findViewById(R.id.deleteIcon);
+            viewHolder.edit = convertView.findViewById(R.id.editVenueIcon);
+            viewHolder.delete = convertView.findViewById(R.id.deleteVenueIcon);
             result = convertView;
             convertView.setTag(viewHolder);
         } else {

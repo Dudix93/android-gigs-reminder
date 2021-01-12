@@ -7,6 +7,7 @@ class GigEntry {
     public static final String COL_EVENT_TOWN = "Town";
     public static final String COL_EVENT_DATE = "Date";
     public static final String COL_EVENT_TIME = "Time";
+    public static final String COL_EVENT_VENUE = "Venue";
 
     public static String createTable() {
         return "CREATE TABLE " + TABLE_NAME + " (" +
@@ -14,7 +15,8 @@ class GigEntry {
                 COL_EVENT_BAND + " TEXT, " +
                 COL_EVENT_TOWN + " TEXT, " +
                 COL_EVENT_DATE + " TEXT, " +
-                COL_EVENT_TIME + " TEXT" + ")";
+                COL_EVENT_TIME + " INT, " +
+                COL_EVENT_VENUE + " INT" + ")";
     }
 }
 

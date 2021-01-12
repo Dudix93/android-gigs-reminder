@@ -1,5 +1,7 @@
 package com.mdodot.gigsreminder;
 
+import androidx.annotation.NonNull;
+
 public class VenueModel {
     private int Id;
     private String Name;
@@ -29,5 +31,11 @@ public class VenueModel {
 
     public void setTown(String town) {
         Town = town;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return Name;
     }
 }

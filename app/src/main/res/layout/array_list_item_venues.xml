@@ -10,7 +10,7 @@ android:layout_width="match_parent" android:layout_height="80dp">
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/editIcon"
+        android:id="@+id/editVenueIcon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/ic_edit"
@@ -19,7 +19,7 @@ android:layout_width="match_parent" android:layout_height="80dp">
         android:background="@color/colorEdit"/>
 
     <ImageView
-        android:id="@+id/deleteIcon"
+        android:id="@+id/deleteVenueIcon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/ic_delete"

@@ -48,8 +48,8 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
             viewHolder.town = (TextView) convertView.findViewById(R.id.town);
             viewHolder.date = (TextView) convertView.findViewById(R.id.eventDate);
             viewHolder.time = (TextView) convertView.findViewById(R.id.eventTime);
-            viewHolder.edit = convertView.findViewById(R.id.editIcon);
-            viewHolder.delete = convertView.findViewById(R.id.deleteIcon);
+            viewHolder.edit = convertView.findViewById(R.id.editGigIcon);
+            viewHolder.delete = convertView.findViewById(R.id.deleteGigIcon);
             result = convertView;
             convertView.setTag(viewHolder);
         } else {

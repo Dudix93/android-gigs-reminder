@@ -10,7 +10,7 @@ android:layout_width="match_parent" android:layout_height="80dp">
     android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/editIcon"
+            android:id="@+id/editGigIcon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_edit"
@@ -19,7 +19,7 @@ android:layout_width="match_parent" android:layout_height="80dp">
             android:background="@color/colorEdit"/>
 
         <ImageView
-            android:id="@+id/deleteIcon"
+            android:id="@+id/deleteGigIcon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_delete"
@@ -38,6 +38,7 @@ android:layout_width="match_parent" android:layout_height="80dp">
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/gig_entry"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

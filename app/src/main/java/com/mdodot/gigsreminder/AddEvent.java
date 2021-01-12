@@ -10,9 +10,14 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -20,14 +25,24 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import static java.lang.String.valueOf;
 
 public class AddEvent extends AppCompatActivity {
 
     private AwesomeValidation awesomeValidation;
     private DBHelper dbHelper;
     private EditText editTextBand, editTextTown, editTextDate, editTextTime;
+    private Spinner spinnerVenue;
+    private Button buttonAddVenue;
     private Bundle extras;
+    private ArrayList<VenueModel> venuesList;
+    private DataManager dataManager;
+    private static VenuesAdapter adapter;
+    private int selectedVenueId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +52,12 @@ public class AddEvent extends AppCompatActivity {
         editTextTown = (EditText) findViewById(R.id.TownValue);
         editTextDate = (EditText) findViewById(R.id.EventDateValue);
         editTextTime = (EditText) findViewById(R.id.EventTimeValue);
+        spinnerVenue = (Spinner) findViewById(R.id.EventVenueValue);
         extras = getIntent().getExtras();
+
+        dataManager = DataManager.getInstance();
+        dataManager.loadFromDatabase(dbHelper);
+        dataManager.loadVenuesFromDatabase(dataManager.venuesCursor);
 
         populateFieldsToEdit();
 
@@ -75,12 +95,30 @@ public class AddEvent extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                String minutes = minute < 10 ? "0" + String.valueOf(minute) : String.valueOf(minute);
-                                editTextTime.setText(String.valueOf(hourOfDay) + ":" + minutes);
+                                String minutes = minute < 10 ? "0" + valueOf(minute) : valueOf(minute);
+                                editTextTime.setText(valueOf(hourOfDay) + ":" + minutes);
                             }
                         },
                         hour, minute, true);
                 picker.show();
+            }
+        });
+
+        List<VenueModel> venuesList = new ArrayList<VenueModel>();
+        populateSpinnerWithVenues(venuesList);
+        ArrayAdapter<VenueModel> dataAdapter = new ArrayAdapter<VenueModel>(this, android.R.layout.simple_spinner_item, venuesList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerVenue.setAdapter(dataAdapter);
+        spinnerVenue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedVenueId = ((VenueModel)parent.getSelectedItem()).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
             }
         });
 
@@ -96,12 +134,26 @@ public class AddEvent extends AppCompatActivity {
         });
     }
 
+    private void populateSpinnerWithVenues(List<VenueModel> venuesNamesList) {
+        venuesList = dataManager.venuesList;
+        adapter = new VenuesAdapter(venuesList,this);
+        if (!adapter.isEmpty()) {
+            venuesNamesList.addAll(dataManager.venuesList);
+        }
+        else {
+            venuesNamesList.add(new VenueModel(-1, getResources().getString(R.string.venue_add), null));
+            spinnerVenue.setEnabled(false);
+            findViewById(R.id.Submit).setEnabled(false);
+        }
+    }
+
     private void populateFieldsToEdit() {
         if (extras != null) {
             editTextBand.setText(extras.getString("eventBand"));
             editTextTown.setText(extras.getString("eventTown"));
             editTextTime.setText(extras.getString("eventTime"));
             editTextDate.setText(extras.getString("eventDate"));
+            spinnerVenue.setSelection(adapter.getPosition(venuesList.get(Integer.parseInt(extras.getString("venueId")))));
         }
     }
 
@@ -121,6 +173,7 @@ public class AddEvent extends AppCompatActivity {
             values.put(GigEntry.COL_EVENT_TOWN, editTextTown.getText().toString());
             values.put(GigEntry.COL_EVENT_DATE, editTextDate.getText().toString());
             values.put(GigEntry.COL_EVENT_TIME, editTextTime.getText().toString());
+            values.put(GigEntry.COL_EVENT_VENUE, selectedVenueId);
 
             if (extras == null) {
                 db.insert(GigEntry.TABLE_NAME, null, values);
@@ -131,5 +184,12 @@ public class AddEvent extends AppCompatActivity {
             db.close();
             finish();
         }
+    }
+
+   public void addNewVenue(View view) {
+        Intent intent = new Intent(view.getContext(), AddVenue.class);
+        intent.putExtra("FromAddEventActivity", true);
+        startActivity(intent);
+        finish();
     }
 }

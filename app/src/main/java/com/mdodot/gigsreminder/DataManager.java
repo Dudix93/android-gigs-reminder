@@ -29,7 +29,8 @@ public class DataManager {
             GigEntry.COL_EVENT_BAND,
             GigEntry.COL_EVENT_TOWN,
             GigEntry.COL_EVENT_DATE,
-            GigEntry.COL_EVENT_TIME
+            GigEntry.COL_EVENT_TIME,
+            GigEntry.COL_EVENT_VENUE
         };
         final String[] venueColumns = {
             VenueEntry.COL_VENUE_ID,
@@ -47,6 +48,7 @@ public class DataManager {
         int gigTownPos = cursor.getColumnIndex(GigEntry.COL_EVENT_TOWN);
         int gigDatePos = cursor.getColumnIndex(GigEntry.COL_EVENT_DATE);
         int gigTimePos = cursor.getColumnIndex(GigEntry.COL_EVENT_TIME);
+        int gigVenuePos = cursor.getColumnIndex(GigEntry.COL_EVENT_VENUE);
 
         DataManager dm = getInstance();
         dm.gigsList.clear();
@@ -56,7 +58,8 @@ public class DataManager {
             String gigTown = cursor.getString(gigTownPos);
             String gigDate = cursor.getString(gigDatePos);
             String gigTime = cursor.getString(gigTimePos);
-            dm.gigsList.add(new GigModel(gigId, gigBand, gigTown, gigDate, gigTime));
+            int gigVenue = cursor.getInt(gigVenuePos);
+            dm.gigsList.add(new GigModel(gigId, gigBand, gigTown, gigDate, gigTime, gigVenue));
         }
         cursor.close();
     }
