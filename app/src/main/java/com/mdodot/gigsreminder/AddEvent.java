@@ -48,6 +48,10 @@ public class AddEvent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        dbHelper = new DBHelper(this);
+
         editTextBand = (EditText) findViewById(R.id.BandValue);
         editTextTown = (EditText) findViewById(R.id.TownValue);
         editTextDate = (EditText) findViewById(R.id.EventDateValue);
@@ -55,14 +59,10 @@ public class AddEvent extends AppCompatActivity {
         spinnerVenue = (Spinner) findViewById(R.id.EventVenueValue);
         extras = getIntent().getExtras();
 
-        dataManager = DataManager.getInstance();
+        dataManager = dataManager.getInstance();
         dataManager.loadFromDatabase(dbHelper);
         dataManager.loadVenuesFromDatabase(dataManager.venuesCursor);
-
-        populateFieldsToEdit();
-
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        dbHelper = new DBHelper(this);
+        venuesList = dataManager.venuesList;
 
         editTextDate.setInputType(InputType.TYPE_NULL);
         editTextTime.setInputType(InputType.TYPE_NULL);
@@ -105,10 +105,15 @@ public class AddEvent extends AppCompatActivity {
         });
 
         List<VenueModel> venuesList = new ArrayList<VenueModel>();
+
         populateSpinnerWithVenues(venuesList);
+
         ArrayAdapter<VenueModel> dataAdapter = new ArrayAdapter<VenueModel>(this, android.R.layout.simple_spinner_item, venuesList);
+
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spinnerVenue.setAdapter(dataAdapter);
+        populateFieldsToEdit();
         spinnerVenue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -135,7 +140,6 @@ public class AddEvent extends AppCompatActivity {
     }
 
     private void populateSpinnerWithVenues(List<VenueModel> venuesNamesList) {
-        venuesList = dataManager.venuesList;
         adapter = new VenuesAdapter(venuesList,this);
         if (!adapter.isEmpty()) {
             venuesNamesList.addAll(dataManager.venuesList);
@@ -153,7 +157,11 @@ public class AddEvent extends AppCompatActivity {
             editTextTown.setText(extras.getString("eventTown"));
             editTextTime.setText(extras.getString("eventTime"));
             editTextDate.setText(extras.getString("eventDate"));
-            spinnerVenue.setSelection(adapter.getPosition(venuesList.get(Integer.parseInt(extras.getString("venueId")))));
+            for (VenueModel venue : venuesList) {
+                if (venue.getId() == (extras.getInt("venueId"))) {
+                    spinnerVenue.setSelection(venuesList.indexOf(venue));
+                }
+            }
         }
     }
 
