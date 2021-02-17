@@ -1,9 +1,10 @@
 package com.mdodot.gigsreminder;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Timer;
 
-public class GigModel {
+public class GigModel implements Serializable {
     private int id;
     private String band;
     private String town;

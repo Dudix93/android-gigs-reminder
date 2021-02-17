@@ -48,8 +48,6 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
             viewHolder.town = (TextView) convertView.findViewById(R.id.town);
             viewHolder.date = (TextView) convertView.findViewById(R.id.eventDate);
             viewHolder.time = (TextView) convertView.findViewById(R.id.eventTime);
-            viewHolder.edit = convertView.findViewById(R.id.editGigIcon);
-            viewHolder.delete = convertView.findViewById(R.id.deleteGigIcon);
             result = convertView;
             convertView.setTag(viewHolder);
         } else {
@@ -62,31 +60,6 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
         viewHolder.date.setText(gigModel.getDate());
         viewHolder.time.setText(gigModel.getTime());
 
-        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
-            private final int gigId = gigModel.getId();
-            @Override
-            public void onClick(View view) {
-                if (mContext instanceof GigsActivity) {
-                    DialogFragment deleteGigFragment = new DeleteDialogFragment();
-                    Bundle args = new Bundle();
-                    args.putInt("id", gigId);
-                    args.putInt("msg", R.string.event_delete);
-                    deleteGigFragment.setArguments(args);
-                    deleteGigFragment.show(((GigsActivity) mContext).getSupportFragmentManager(), "deleteGig");
-                }
-            }
-        });
-
-        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
-            private final GigModel event = gigModel;
-            @Override
-            public void onClick(View view) {
-                if (mContext instanceof GigsActivity) {
-                    ((GigsActivity) mContext).editGig(event);
-                }
-            }
-        });
-
         convertView.findViewById(R.id.gig_entry).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +67,23 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
             }
         });
 
+        convertView.findViewById(R.id.gig_entry).setOnLongClickListener(new View.OnLongClickListener() {
+
+            private final int gigId = gigModel.getId();
+
+            @Override
+            public boolean onLongClick(View view) {
+                if (mContext instanceof GigsActivity) {
+                    DialogFragment optionsGigFragment = new EventOptionsDialogFragment();
+                    Bundle args = new Bundle();
+                    args.putInt("id", gigId);
+                    args.putSerializable("event", gigModel);
+                    optionsGigFragment.setArguments(args);
+                    optionsGigFragment.show(((GigsActivity) mContext).getSupportFragmentManager(), "optionsGig");
+                }
+                return true;
+            }
+        });
         return convertView;
     }
 }

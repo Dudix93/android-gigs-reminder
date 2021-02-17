@@ -3,6 +3,8 @@
     <string name="ok">OK</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
     <string name="venues">Venues</string>
     <string name="venue">Venue</string>
     <string name="band">Band</string>
