@@ -42,8 +42,6 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
             convertView = inflater.inflate(R.layout.array_list_item_venues, parent, false);
             viewHolder.venue = convertView.findViewById(R.id.venue_name);
             viewHolder.town = convertView.findViewById(R.id.town);
-            viewHolder.edit = convertView.findViewById(R.id.editVenueIcon);
-            viewHolder.delete = convertView.findViewById(R.id.deleteVenueIcon);
             result = convertView;
             convertView.setTag(viewHolder);
         } else {
@@ -54,28 +52,21 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
         viewHolder.venue.setText(venueModel.getName());
         viewHolder.town.setText(venueModel.getTown());
 
-        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+        convertView.findViewById(R.id.venue_entry).setOnLongClickListener(new View.OnLongClickListener() {
+
             private final int venueId = venueModel.getId();
+
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View view) {
                 if (mContext instanceof VenuesActivity) {
-                    DialogFragment deleteVenueFragment = new DeleteDialogFragment();
+                    DialogFragment optionsDialogFragment = new EntryOptionsDialogFragment();
                     Bundle args = new Bundle();
                     args.putInt("id", venueId);
-                    args.putInt("msg", R.string.venue_delete);
-                    deleteVenueFragment.setArguments(args);
-                    deleteVenueFragment.show(((VenuesActivity) mContext).getSupportFragmentManager(), "deleteVenue");
+                    args.putSerializable("venue", venueModel);
+                    optionsDialogFragment.setArguments(args);
+                    optionsDialogFragment.show(((VenuesActivity) mContext).getSupportFragmentManager(), "optionsVenue");
                 }
-            }
-        });
-
-        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
-            private final VenueModel venue = venueModel;
-            @Override
-            public void onClick(View view) {
-                if (mContext instanceof VenuesActivity) {
-                    ((VenuesActivity) mContext).editVenue(venue);
-                }
+                return true;
             }
         });
 

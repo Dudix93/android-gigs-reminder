@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent" android:layout_height="80dp">
 <!-- Bottom View Start-->
-<LinearLayout
-    android:background="#66ddff00"
-    android:id="@+id/bottom_wrapper"
-    android:layout_width="160dp"
-    android:weightSum="1"
-    android:layout_height="match_parent">
+<!--<LinearLayout-->
+<!--    android:background="#66ddff00"-->
+<!--    android:id="@+id/bottom_wrapper"-->
+<!--    android:layout_width="160dp"-->
+<!--    android:weightSum="1"-->
+<!--    android:layout_height="match_parent">-->
 
-    <ImageView
-        android:id="@+id/editVenueIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_edit"
-        android:scaleType="centerInside"
-        android:adjustViewBounds="true"
-        android:background="@color/colorEdit"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/editVenueIcon"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/ic_edit"-->
+<!--        android:scaleType="centerInside"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:background="@color/colorEdit"/>-->
 
-    <ImageView
-        android:id="@+id/deleteVenueIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_delete"
-        android:scaleType="centerInside"
-        android:adjustViewBounds="true"
-        android:background="@color/colorDelete"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/deleteVenueIcon"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/ic_delete"-->
+<!--        android:scaleType="centerInside"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:background="@color/colorDelete"/>-->
 
-</LinearLayout>
+<!--</LinearLayout>-->
 <!-- Bottom View End-->
 
 <!-- Surface View Start -->
@@ -38,6 +38,7 @@ android:layout_width="match_parent" android:layout_height="80dp">
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/venue_entry"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -65,4 +66,4 @@ android:layout_width="match_parent" android:layout_height="80dp">
 
     </LinearLayout>
 <!-- Surface View End -->
-</com.daimajia.swipe.SwipeLayout>
+</RelativeLayout>

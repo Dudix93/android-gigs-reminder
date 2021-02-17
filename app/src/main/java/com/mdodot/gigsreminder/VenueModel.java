@@ -2,7 +2,9 @@ package com.mdodot.gigsreminder;
 
 import androidx.annotation.NonNull;
 
-public class VenueModel {
+import java.io.Serializable;
+
+public class VenueModel implements Serializable {
     private int Id;
     private String Name;
     private String Town;

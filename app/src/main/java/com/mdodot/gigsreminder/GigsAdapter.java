@@ -74,12 +74,12 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
             @Override
             public boolean onLongClick(View view) {
                 if (mContext instanceof GigsActivity) {
-                    DialogFragment optionsGigFragment = new EventOptionsDialogFragment();
+                    DialogFragment optionsDialogFragment = new EntryOptionsDialogFragment();
                     Bundle args = new Bundle();
                     args.putInt("id", gigId);
                     args.putSerializable("event", gigModel);
-                    optionsGigFragment.setArguments(args);
-                    optionsGigFragment.show(((GigsActivity) mContext).getSupportFragmentManager(), "optionsGig");
+                    optionsDialogFragment.setArguments(args);
+                    optionsDialogFragment.show(((GigsActivity) mContext).getSupportFragmentManager(), "optionsGig");
                 }
                 return true;
             }
