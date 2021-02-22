@@ -15,7 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import java.util.ArrayList;
 
 public class GigsAdapter extends ArrayAdapter<GigModel> {
-    private ArrayList<GigModel> dataSet;
+    private ArrayList<GigModel> gigsList;
     private GigModel gigModel;
     private Context mContext;
 
@@ -28,9 +28,9 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
         ImageView delete;
     }
 
-    public GigsAdapter(ArrayList<GigModel> data, Context context){
-        super(context, R.layout.array_list_item_gigs, data);
-        this.dataSet = data;
+    public GigsAdapter(ArrayList<GigModel> gigsList, Context context){
+        super(context, R.layout.array_list_item_gigs, gigsList);
+        this.gigsList = gigsList;
         this.mContext = context;
     }
 
@@ -76,6 +76,9 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
                 if (mContext instanceof GigsActivity) {
                     DialogFragment optionsDialogFragment = new EntryOptionsDialogFragment();
                     Bundle args = new Bundle();
+                    for (GigModel gig : gigsList) {
+                        if (gigId == (gig.getId())) gigModel = gig;
+                    }
                     args.putInt("id", gigId);
                     args.putSerializable("event", gigModel);
                     optionsDialogFragment.setArguments(args);
