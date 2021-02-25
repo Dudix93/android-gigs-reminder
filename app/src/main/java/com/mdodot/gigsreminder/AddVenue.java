@@ -80,7 +80,7 @@ public class AddVenue extends AppCompatActivity {
 
             db.close();
             if (extras != null) {
-                 if ((Boolean) extras.get("FromAddEventActivity")) {
+                 if (extras.getBoolean("FromAddEventActivity")) {
                     startActivity(new Intent(view.getContext(), AddEvent.class));
                 }
             }
