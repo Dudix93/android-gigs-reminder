@@ -40,14 +40,19 @@ public class AddVenue extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.addVenueToolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        toolbar.setTitle(R.string.venue_add);
         if (extras != null) {
-            toolbar.setTitle(extras.get("venueId") != null && extras.get("venueId") != "" ? R.string.venue_edit : R.string.venue_add);
+            if (extras.get("venueId") != null && extras.get("venueId") != "") toolbar.setTitle(R.string.venue_edit);
         }
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!extras.isEmpty() && (Boolean) extras.get("FromAddEventActivity")) startActivity(new Intent(view.getContext(), AddEvent.class));
+                if (extras != null) {
+                    if (extras.getBoolean("FromAddEventActivity")) {
+                        startActivity(new Intent(view.getContext(), AddEvent.class));
+                    }
+                }
                 finish();
             }
         });
@@ -74,7 +79,11 @@ public class AddVenue extends AppCompatActivity {
             }
 
             db.close();
-            if ((Boolean) extras.get("FromAddEventActivity")) startActivity(new Intent(view.getContext(), AddEvent.class));
+            if (extras != null) {
+                 if ((Boolean) extras.get("FromAddEventActivity")) {
+                    startActivity(new Intent(view.getContext(), AddEvent.class));
+                }
+            }
             finish();
         }
     }
