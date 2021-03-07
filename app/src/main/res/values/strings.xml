@@ -26,4 +26,5 @@
     <string name="sorting_methods">Sort By:</string>
     <string name="event_delete">Delete event?</string>
     <string name="venue_delete">Delete venue?</string>
+    <string name="venue_already_assigned">This venue is already assigned to an event.</string>
 </resources>

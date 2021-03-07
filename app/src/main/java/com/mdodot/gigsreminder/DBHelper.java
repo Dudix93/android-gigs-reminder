@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
     private static final int DB_VER = 1;
     private static final String DB_NAME = "gigsDb";
@@ -35,5 +37,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteVenue(SQLiteDatabase sqLiteDatabase, int id) {
         sqLiteDatabase.execSQL("DELETE FROM  " + VenueEntry.TABLE_NAME + " where "+ VenueEntry.COL_VENUE_ID + " = " + id);
+    }
+
+    public boolean isVenueAssigned(SQLiteDatabase sqLiteDatabase, int id) {
+        ArrayList<Integer> gigIds = new ArrayList<>();
+        Cursor res = sqLiteDatabase.rawQuery("SELECT " + GigEntry.COL_EVENT_ID + " FROM  " + GigEntry.TABLE_NAME + " where " + GigEntry.COL_EVENT_VENUE + " = " + id, null);
+        return res.getCount() > 0;
     }
 }

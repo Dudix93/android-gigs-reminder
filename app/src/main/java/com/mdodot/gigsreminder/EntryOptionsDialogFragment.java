@@ -3,6 +3,7 @@ package com.mdodot.gigsreminder;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,8 @@ public class EntryOptionsDialogFragment extends DialogFragment {
     private String msg;
     private GigModel gig;
     private VenueModel venue;
+    private DBHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -20,6 +23,8 @@ public class EntryOptionsDialogFragment extends DialogFragment {
         id = getArguments().getInt("id");
         gig = (GigModel) getArguments().getSerializable("event");
         venue = (VenueModel) getArguments().getSerializable("venue");
+        dbHelper = new DBHelper(this.getContext());
+        db = dbHelper.getWritableDatabase();
 
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     @Override
@@ -33,9 +38,17 @@ public class EntryOptionsDialogFragment extends DialogFragment {
                             deleteGigFragment.show(((GigsActivity) getContext()).getSupportFragmentManager(), "deleteGig");
                         }
                         else if (getActivity() instanceof VenuesActivity) {
-                            args.putInt("msg", R.string.venue_delete);
-                            deleteGigFragment.setArguments(args);
-                            deleteGigFragment.show(((VenuesActivity) getContext()).getSupportFragmentManager(), "deleteVenue");
+                            if (!dbHelper.isVenueAssigned(db, venue.getId())) {
+                                args.putInt("msg", R.string.venue_delete);
+                                deleteGigFragment.setArguments(args);
+                                deleteGigFragment.show(((VenuesActivity) getContext()).getSupportFragmentManager(), "deleteVenue");
+                            }
+                            else {
+                                MessageDialogFragment messageDialogFragment = new MessageDialogFragment();
+                                args.putInt("msg", R.string.venue_already_assigned);
+                                messageDialogFragment.setArguments(args);
+                                messageDialogFragment.show(((VenuesActivity) getContext()).getSupportFragmentManager(), "venueAssigned");
+                            }
                         }
                     }
                 })
