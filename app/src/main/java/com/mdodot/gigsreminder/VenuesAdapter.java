@@ -1,6 +1,7 @@
 package com.mdodot.gigsreminder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +68,13 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
                     optionsDialogFragment.show(((VenuesActivity) mContext).getSupportFragmentManager(), "optionsVenue");
                 }
                 return true;
+            }
+        });
+
+        convertView.findViewById(R.id.venue_entry).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(view.getContext(), VenueActivity.class));
             }
         });
 
