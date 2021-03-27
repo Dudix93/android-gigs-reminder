@@ -62,12 +62,7 @@ public class AddVenue extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (extras != null) {
-                    if (extras.getBoolean("FromAddEventActivity")) {
-                        startActivity(new Intent(view.getContext(), AddEvent.class));
-                    }
-                }
-                finish();
+                backToAddEventActivity(view);
             }
         });
 
@@ -116,12 +111,7 @@ public class AddVenue extends AppCompatActivity {
             }
 
             db.close();
-            if (extras != null) {
-                 if (extras.getBoolean("FromAddEventActivity")) {
-                    startActivity(new Intent(view.getContext(), AddEvent.class));
-                }
-            }
-            finish();
+            backToAddEventActivity(view);
         }
     }
 
@@ -130,5 +120,16 @@ public class AddVenue extends AppCompatActivity {
             editTextVenue.setText(extras.getString("venueName"));
             editTextTown.setText(extras.getString("venueTown"));
         }
+    }
+
+    private void backToAddEventActivity(View view) {
+        if (extras != null) {
+            if (extras.getBoolean("FromAddEventActivity") && extras.get("event") != null) {
+                Intent intent = new Intent(view.getContext(), AddEvent.class);
+                intent.putExtra("event", (GigModel)extras.get("event"));
+                startActivity(intent);
+            }
+        }
+        finish();
     }
 }

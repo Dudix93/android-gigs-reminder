@@ -1,5 +1,6 @@
 package com.mdodot.gigsreminder;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -137,6 +138,13 @@ public class AddEvent extends AppCompatActivity {
                 finish();
             }
         });
+
+        if (extras != null && extras.get("event") != null) {
+            editTextBand.setText(((GigModel)extras.get("event")).getBand());
+            editTextTown.setText(((GigModel)extras.get("event")).getTown());
+            editTextTime.setText(((GigModel)extras.get("event")).getTime());
+            editTextDate.setText(((GigModel)extras.get("event")).getDate());
+        }
     }
 
     private void populateSpinnerWithVenues(List<VenueModel> venuesNamesList) {
@@ -195,8 +203,15 @@ public class AddEvent extends AppCompatActivity {
     }
 
    public void addNewVenue(View view) {
+        GigModel event = new GigModel(1,
+                editTextBand.getText().toString(),
+                editTextTown.getText().toString(),
+                editTextDate.getText().toString(),
+                editTextTime.getText().toString(),
+                1);
         Intent intent = new Intent(view.getContext(), AddVenue.class);
         intent.putExtra("FromAddEventActivity", true);
+        intent.putExtra("event",event);
         startActivity(intent);
         finish();
     }
