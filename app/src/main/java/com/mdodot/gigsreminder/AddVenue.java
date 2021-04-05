@@ -5,6 +5,8 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -28,6 +30,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -40,6 +43,7 @@ public class AddVenue extends AppCompatActivity {
     private DBHelper dbHelper;
     private EditText editTextTown, editTextVenue;
     private Bundle extras;
+    private Geocoder mGeocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class AddVenue extends AppCompatActivity {
         setContentView(R.layout.activity_add_venue);
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         dbHelper = new DBHelper(this);
+        mGeocoder = new Geocoder(this, Locale.getDefault());
         editTextTown = (EditText) findViewById(R.id.TownValue);
         editTextVenue = (EditText) findViewById(R.id.VenueValue);
         extras = getIntent().getExtras();
@@ -73,13 +78,22 @@ public class AddVenue extends AppCompatActivity {
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS_COMPONENTS));
+        autocompleteFragment.setPlaceFields(Arrays.asList(
+                Place.Field.ID,
+                Place.Field.NAME,
+                Place.Field.ADDRESS_COMPONENTS,
+                Place.Field.LAT_LNG
+        ));
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NotNull Place place) {
                 editTextVenue.setText(place.getName());
-                editTextTown.setText(place.getAddressComponents().asList().get(2).getName());
+                try {
+                    editTextTown.setText(getCityNameByCoordinates(place.getLatLng().latitude, place.getLatLng().longitude));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -131,5 +145,18 @@ public class AddVenue extends AppCompatActivity {
             }
         }
         finish();
+    }
+
+    private String getCityNameByCoordinates(double lat, double lon) throws IOException {
+
+        List<Address> addresses = mGeocoder.getFromLocation(lat, lon, 10);
+        if (addresses != null && addresses.size() > 0) {
+            for (Address adr : addresses) {
+                if (adr.getLocality() != null && adr.getLocality().length() > 0) {
+                    return adr.getLocality();
+                }
+            }
+        }
+        return null;
     }
 }
