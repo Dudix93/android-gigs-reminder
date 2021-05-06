@@ -29,4 +29,5 @@
     <string name="venue_already_assigned">This venue is already assigned to an event.</string>
     <string name="places_api_key">AIzaSyAD3BxkppK0NhSdhX7F7CO970MDDb5i6Ic</string>
     <string name="maps_api_key">AIzaSyDSgjqdLzA43PkkBXSKH9YN1nVz-jITW1Q</string>
+    <string name="geolocation_api_key">AIzaSyAIKAyM53iMxjuruQ_x2sMusrZwwATuaUc</string>
 </resources>
