@@ -30,7 +30,6 @@
                     android:id="@+id/venue_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Piwiarnia u Bossmana"
                     android:textSize="20sp" />
 
             </RelativeLayout>
@@ -43,7 +42,6 @@
                 android:id="@+id/venue_town"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ostrów Wielkopolski"
                 android:layout_alignParentRight="true"
                 android:textSize="15sp" />
 

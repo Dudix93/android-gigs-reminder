@@ -74,7 +74,11 @@ public class VenuesAdapter extends ArrayAdapter<VenueModel>  {
         convertView.findViewById(R.id.venue_entry).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(view.getContext(), VenueActivity.class));
+                Intent venueActivityIntent = new Intent(view.getContext(), VenueActivity.class);
+                venueActivityIntent.putExtra("venueName", venueModel.getName());
+                venueActivityIntent.putExtra("venueTown", venueModel.getTown());
+                venueActivityIntent.putExtra("placeId", venueModel.getPlaceId());
+                mContext.startActivity(venueActivityIntent);
             }
         });
 

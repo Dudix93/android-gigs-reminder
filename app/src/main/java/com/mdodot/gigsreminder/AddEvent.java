@@ -153,7 +153,7 @@ public class AddEvent extends AppCompatActivity {
             venuesNamesList.addAll(dataManager.venuesList);
         }
         else {
-            venuesNamesList.add(new VenueModel(-1, getResources().getString(R.string.venue_add), null));
+            venuesNamesList.add(new VenueModel(-1, getResources().getString(R.string.venue_add), null, null));
             spinnerVenue.setEnabled(false);
             findViewById(R.id.Submit).setEnabled(false);
         }

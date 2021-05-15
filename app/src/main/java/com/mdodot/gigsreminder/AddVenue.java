@@ -44,6 +44,7 @@ public class AddVenue extends AppCompatActivity {
     private EditText editTextTown, editTextVenue;
     private Bundle extras;
     private Geocoder mGeocoder;
+    private String placeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class AddVenue extends AppCompatActivity {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NotNull Place place) {
+                placeId = place.getId();
                 editTextVenue.setText(place.getName());
                 try {
                     editTextTown.setText(getCityNameByCoordinates(place.getLatLng().latitude, place.getLatLng().longitude));
@@ -116,6 +118,7 @@ public class AddVenue extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put(VenueEntry.COL_VENUE_NAME, editTextVenue.getText().toString());
             values.put(VenueEntry.COL_VENUE_TOWN, editTextTown.getText().toString());
+            values.put(VenueEntry.COL_VENUE_PLACE_ID, placeId);
 
             if (extras != null && extras.get("venueId") != null && extras.get("venueId") != "") {
                 db.update(VenueEntry.TABLE_NAME, values, VenueEntry.COL_VENUE_ID + "=" + extras.get("venueId"), null);

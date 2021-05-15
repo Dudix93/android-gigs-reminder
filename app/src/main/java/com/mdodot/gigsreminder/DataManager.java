@@ -36,6 +36,7 @@ public class DataManager {
             VenueEntry.COL_VENUE_ID,
             VenueEntry.COL_VENUE_NAME,
             VenueEntry.COL_VENUE_TOWN,
+            VenueEntry.COL_VENUE_PLACE_ID,
         };
         dm.gigsCursor = db.query(GigEntry.TABLE_NAME, gigColumns, null, null, null, null, null);
         dm.venuesCursor = db.query(VenueEntry.TABLE_NAME, venueColumns, null, null, null, null, null);
@@ -68,6 +69,7 @@ public class DataManager {
         int venueIdPos = cursor.getColumnIndex(VenueEntry.COL_VENUE_ID);
         int venueNamePos = cursor.getColumnIndex(VenueEntry.COL_VENUE_NAME);
         int venueTownPos = cursor.getColumnIndex(VenueEntry.COL_VENUE_TOWN);
+        int venuePlaceIdPos = cursor.getColumnIndex(VenueEntry.COL_VENUE_PLACE_ID);
 
         DataManager dm = getInstance();
         dm.venuesList.clear();
@@ -75,7 +77,8 @@ public class DataManager {
             int venueId = cursor.getInt(venueIdPos);
             String venueName = cursor.getString(venueNamePos);
             String venueTown = cursor.getString(venueTownPos);
-            dm.venuesList.add(new VenueModel(venueId, venueName, venueTown));
+            String venuePlaceId = cursor.getString(venuePlaceIdPos);
+            dm.venuesList.add(new VenueModel(venueId, venueName, venueTown, venuePlaceId));
         }
         cursor.close();
     }
