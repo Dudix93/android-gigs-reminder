@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent" android:layout_height="80dp">
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:id="@+id/venue_entry">
 <!-- Bottom View Start-->
 <!--<LinearLayout-->
 <!--    android:background="#66ddff00"-->
@@ -38,7 +40,6 @@ android:layout_width="match_parent" android:layout_height="80dp">
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/venue_entry"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -52,12 +53,19 @@ android:layout_width="match_parent" android:layout_height="80dp">
                 android:text="The Key club"
                 />
 
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/town"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:layout_margin="10dp"
                 android:text="Leeds"
                 />
