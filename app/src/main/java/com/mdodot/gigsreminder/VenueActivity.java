@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,11 +52,12 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
     private Context mContext;
     private TextView venueNameTextView;
     private TextView venueTownTextView;
+    private ImageView dropdownIconImageView;
     private SupportMapFragment mapFragment;
-    private List<Place.Field> placeFields;
     private UiSettings mUiSettings;
     private ExpandableListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
+    private List<Place.Field> placeFields;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
 
@@ -144,9 +146,8 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Expanded.",
-                        Toast.LENGTH_SHORT).show();
+                dropdownIconImageView = expandableListView.findViewById(R.id.dropdown_icon);
+                dropdownIconImageView.setImageResource(R.drawable.ic_keyboard_arrow_up);
             }
         });
 
@@ -154,25 +155,14 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        expandableListTitle.get(groupPosition) + " List Collapsed.",
-                        Toast.LENGTH_SHORT).show();
-
+                dropdownIconImageView = expandableListView.findViewById(R.id.dropdown_icon);
+                dropdownIconImageView.setImageResource(R.drawable.ic_keyboard_arrow_down);
             }
         });
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        expandableListTitle.get(groupPosition)
-                                + " -> "
-                                + expandableListDetail.get(
-                                expandableListTitle.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT
-                ).show();
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 return false;
             }
         });
