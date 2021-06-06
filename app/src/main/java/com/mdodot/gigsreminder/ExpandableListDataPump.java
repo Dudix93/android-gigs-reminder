@@ -1,37 +1,34 @@
 package com.mdodot.gigsreminder;
 
+import android.content.Context;
+import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ExpandableListDataPump {
-    public static HashMap<String, List<String>> getData() {
+    public static HashMap<String, List<String>> getData(Context context, String placeId, Cursor cursor) {
         HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
 
-        List<String> cricket = new ArrayList<String>();
-        cricket.add("India");
-        cricket.add("Pakistan");
-        cricket.add("Australia");
-        cricket.add("England");
-        cricket.add("South Africa");
+        if (((cursor != null) && (cursor.getCount() > 0))) {
 
-        List<String> football = new ArrayList<String>();
-        football.add("Brazil");
-        football.add("Spain");
-        football.add("Germany");
-        football.add("Netherlands");
-        football.add("Italy");
+            List<String> events = new ArrayList<String>();
+            int eventBandPos = cursor.getColumnIndex(GigEntry.COL_EVENT_BAND);
+            int eventDatePos = cursor.getColumnIndex(GigEntry.COL_EVENT_DATE);
 
-        List<String> basketball = new ArrayList<String>();
-        basketball.add("United States");
-        basketball.add("Spain");
-        basketball.add("Argentina");
-        basketball.add("France");
-        basketball.add("Russia");
+            while (cursor.moveToNext()) {
+                String band = cursor.getString(eventBandPos);
+                String date = cursor.getString(eventDatePos);
+                events.add(band);
+            }
+            cursor.close();
 
-        expandableListDetail.put("CRICKET TEAMS", cricket);
-        expandableListDetail.put("FOOTBALL TEAMS", football);
-        expandableListDetail.put("BASKETBALL TEAMS", basketball);
+            expandableListDetail.put(context.getResources().getString(R.string.upcoming_events), events);
+
+        } else {
+            expandableListDetail.put(context.getResources().getString(R.string.no_upcoming_events), null);
+        }
         return expandableListDetail;
     }
 }

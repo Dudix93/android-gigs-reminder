@@ -44,4 +44,15 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res = sqLiteDatabase.rawQuery("SELECT " + GigEntry.COL_EVENT_ID + " FROM  " + GigEntry.TABLE_NAME + " where " + GigEntry.COL_EVENT_VENUE + " = " + id, null);
         return res.getCount() > 0;
     }
-}
+
+    public Cursor venueEvents(SQLiteDatabase sqLiteDatabase, String placeId) {
+        Cursor res = sqLiteDatabase.rawQuery(" SELECT "+
+                GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_BAND + " , " +
+                GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_DATE +
+                " FROM " + GigEntry.TABLE_NAME +
+                " INNER JOIN " + VenueEntry.TABLE_NAME +
+                " ON " + VenueEntry.TABLE_NAME + "." + VenueEntry.COL_VENUE_ID + " = " + GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_VENUE +
+                " WHERE " + VenueEntry.TABLE_NAME + "." + VenueEntry.COL_VENUE_PLACE_ID + " = '" + placeId + "'", null);
+        return res;
+    }
+    }

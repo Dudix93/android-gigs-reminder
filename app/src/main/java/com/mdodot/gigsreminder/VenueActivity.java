@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -60,12 +61,15 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
     private List<Place.Field> placeFields;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
+    private DBHelper dbHelper;
+    private Cursor venueEventsRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue);
         mContext = getApplicationContext();
+        dbHelper = new DBHelper(mContext);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         extras = getIntent().getExtras();
         placeId = extras.getString("placeId");
@@ -74,7 +78,6 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
         venueNameTextView.setText(extras.getString("venueName"));
         venueTownTextView.setText(extras.getString("venueTown"));
         fetchPlaceDetails();
-        prepareExpandableList();
     }
 
     @Override
@@ -101,6 +104,7 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
         placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
             public void onSuccess(FetchPlaceResponse response) {
                 place = response.getPlace();
+                prepareExpandableList();
                 mapFragment.getMapAsync((OnMapReadyCallback) mapFragment.getContext());
                 findViewById(R.id.map_get_directions).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -138,7 +142,8 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
 
     public void prepareExpandableList() {
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        expandableListDetail = ExpandableListDataPump.getData();
+        venueEventsRes = dbHelper.venueEvents(dbHelper.getReadableDatabase(), place.getId());
+        expandableListDetail = ExpandableListDataPump.getData(mContext, place.getId(), venueEventsRes);
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);

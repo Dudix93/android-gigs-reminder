@@ -28,6 +28,8 @@
     <string name="venue_delete">Delete venue?</string>
     <string name="venue_already_assigned">This venue is already assigned to an event.</string>
     <string name="get_directions">Get directions</string>
+    <string name="upcoming_events">Upcoming events</string>
+    <string name="no_upcoming_events">No upcoming events</string>
     <string name="places_api_key">AIzaSyAD3BxkppK0NhSdhX7F7CO970MDDb5i6Ic</string>
     <string name="maps_api_key">AIzaSyDSgjqdLzA43PkkBXSKH9YN1nVz-jITW1Q</string>
     <string name="geolocation_api_key">AIzaSyAIKAyM53iMxjuruQ_x2sMusrZwwATuaUc</string>

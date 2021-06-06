@@ -72,8 +72,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_group, null);
         }
-        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
+        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.venue_upcoming_events_title);
         listTitleTextView.setText(listTitle);
         return convertView;
     }
