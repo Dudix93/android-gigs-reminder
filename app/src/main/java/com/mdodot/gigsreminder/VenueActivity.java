@@ -147,29 +147,31 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new CustomExpandableListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+        if (venueEventsRes != null && venueEventsRes.getCount() > 0) {
+            expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                dropdownIconImageView = expandableListView.findViewById(R.id.dropdown_icon);
-                dropdownIconImageView.setImageResource(R.drawable.ic_keyboard_arrow_up);
-            }
-        });
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    dropdownIconImageView = expandableListView.findViewById(R.id.dropdown_icon);
+                    dropdownIconImageView.setImageResource(R.drawable.ic_keyboard_arrow_up);
+                }
+            });
 
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                dropdownIconImageView = expandableListView.findViewById(R.id.dropdown_icon);
-                dropdownIconImageView.setImageResource(R.drawable.ic_keyboard_arrow_down);
-            }
-        });
+                @Override
+                public void onGroupCollapse(int groupPosition) {
+                    dropdownIconImageView = expandableListView.findViewById(R.id.dropdown_icon);
+                    dropdownIconImageView.setImageResource(R.drawable.ic_keyboard_arrow_down);
+                }
+            });
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                return false;
-            }
-        });
+            expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                    return false;
+                }
+            });
+        }
     }
 }

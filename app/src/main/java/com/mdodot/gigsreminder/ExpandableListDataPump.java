@@ -10,10 +10,9 @@ import java.util.List;
 public class ExpandableListDataPump {
     public static HashMap<String, List<String>> getData(Context context, String placeId, Cursor cursor) {
         HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
-
+        List<String> events = new ArrayList<String>();
         if (((cursor != null) && (cursor.getCount() > 0))) {
 
-            List<String> events = new ArrayList<String>();
             int eventBandPos = cursor.getColumnIndex(GigEntry.COL_EVENT_BAND);
             int eventDatePos = cursor.getColumnIndex(GigEntry.COL_EVENT_DATE);
 
@@ -27,7 +26,7 @@ public class ExpandableListDataPump {
             expandableListDetail.put(context.getResources().getString(R.string.upcoming_events), events);
 
         } else {
-            expandableListDetail.put(context.getResources().getString(R.string.no_upcoming_events), null);
+            expandableListDetail.put(context.getResources().getString(R.string.no_upcoming_events), events);
         }
         return expandableListDetail;
     }

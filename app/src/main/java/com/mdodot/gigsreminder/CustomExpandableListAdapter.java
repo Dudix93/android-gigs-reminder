@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
@@ -15,6 +16,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
+    private ImageView dropdownIconImageView;
 
     public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
                                        HashMap<String, List<String>> expandableListDetail) {
@@ -42,6 +44,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView expandedListTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
         expandedListTextView.setText(expandedListText);
+
         return convertView;
     }
 
@@ -74,6 +77,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
         TextView listTitleTextView = (TextView) convertView.findViewById(R.id.venue_upcoming_events_title);
         listTitleTextView.setText(listTitle);
+        if (listTitle == context.getResources().getString(R.string.no_upcoming_events)) {
+            dropdownIconImageView = convertView.findViewById(R.id.dropdown_icon);
+            dropdownIconImageView.setImageResource(android.R.color.transparent);
+        }
         return convertView;
     }
 
