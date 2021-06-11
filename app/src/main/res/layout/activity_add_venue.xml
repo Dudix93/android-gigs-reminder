@@ -17,6 +17,7 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10sp"
         android:layout_below="@+id/addVenueToolbar">
 
         <fragment android:id="@+id/autocomplete_fragment"
@@ -25,54 +26,61 @@
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/venue_name"
-                android:text="Venue:"
+            <TableRow
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/venue_name"
+                    android:text="@string/venue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp" />
+
+                <EditText
+                    android:id="@+id/VenueValue"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:layout_width="200dp" />
+
+            </TableRow>
+
+            <TableRow
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/town"
+                    android:text="@string/town"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp" />
+
+                <EditText
+                    android:id="@+id/TownValue"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:layout_width="200dp" />
+
+            </TableRow>
+
+            <Button
+                android:id="@+id/submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp" />
+                android:text="Save"
+                android:onClick="saveEvent"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="89dp" />
 
-            <EditText
-                android:id="@+id/VenueValue"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:layout_width="200dp" />
+        </TableLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/town"
-                android:text="Town:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp" />
-
-            <EditText
-                android:id="@+id/TownValue"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:layout_width="200dp" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:onClick="saveEvent"
-            tools:layout_editor_absoluteX="12dp"
-            tools:layout_editor_absoluteY="89dp" />
     </LinearLayout>
 
 </RelativeLayout>
