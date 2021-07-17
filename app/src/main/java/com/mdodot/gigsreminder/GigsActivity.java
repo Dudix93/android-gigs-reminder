@@ -94,6 +94,7 @@ public class GigsActivity extends AppCompatActivity {
         intent.putExtra("eventTime", gigModel.getTime());
         intent.putExtra("eventDate", gigModel.getDate());
         intent.putExtra("venueId", gigModel.getVenue());
+        intent.putExtra("event", gigModel);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
