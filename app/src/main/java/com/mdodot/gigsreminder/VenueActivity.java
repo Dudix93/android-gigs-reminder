@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -29,6 +30,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AddressComponent;
+import com.google.android.libraries.places.api.model.AddressComponents;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
@@ -42,6 +45,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class VenueActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -53,6 +57,8 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
     private Context mContext;
     private TextView venueNameTextView;
     private TextView venueTownTextView;
+    private TextView venueAddressTextView;
+    private TextView venuePhoneTextView;
     private ImageView dropdownIconImageView;
     private SupportMapFragment mapFragment;
     private UiSettings mUiSettings;
@@ -63,6 +69,7 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
     private HashMap<String, List<String>> expandableListDetail;
     private DBHelper dbHelper;
     private Cursor venueEventsRes;
+    private HashMap<String, String> address_components = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +80,6 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         extras = getIntent().getExtras();
         placeId = extras.getString("placeId");
-        venueNameTextView = (TextView)findViewById(R.id.venue_name);
-        venueTownTextView = (TextView)findViewById(R.id.venue_town);
-        venueNameTextView.setText(extras.getString("venueName"));
-        venueTownTextView.setText(extras.getString("venueTown"));
         fetchPlaceDetails();
     }
 
@@ -98,7 +101,8 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
                 Place.Field.NAME,
                 Place.Field.LAT_LNG,
                 Place.Field.ADDRESS,
-                Place.Field.ADDRESS_COMPONENTS
+                Place.Field.ADDRESS_COMPONENTS,
+                Place.Field.PHONE_NUMBER
         );
         FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, placeFields).build();
         placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
@@ -119,10 +123,11 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
                             mContext.startActivity(googleMapsActivity);
                         }
                         catch (MalformedURLException e) {
-                            Toast.makeText(mContext, e.getMessage() + "", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, e.getMessage() + "", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
+                fillPlaceDetails(place);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -173,5 +178,59 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
                 }
             });
         }
+    }
+
+    public void fillPlaceDetails(Place place) {
+        
+        for (AddressComponent addressComponent : place.getAddressComponents().asList()) {
+            for (String type: addressComponent.getTypes()) {
+                switch (type) {
+                    case "street_number" :
+                        address_components.put(type, addressComponent.getName());
+                        break;
+                    case "route" :
+                        address_components.put(type, addressComponent.getName());
+                        break;
+                    case "country" :
+                        address_components.put(type, addressComponent.getName());
+                        break;
+
+                }
+            }
+        }
+
+        venueNameTextView = (TextView)findViewById(R.id.venue_name);
+        venueTownTextView = (TextView)findViewById(R.id.venue_town);
+        venueAddressTextView = (TextView)findViewById(R.id.venue_address);
+        venuePhoneTextView = (TextView)findViewById(R.id.venue_phone);
+        venueNameTextView.setText(extras.getString("venueName"));
+        venueTownTextView.setText(extras.getString("venueTown") +", "+ address_components.get("country"));
+        venueAddressTextView.setText(address_components.get("route") +" "+ address_components.get("street_number"));
+
+        if (place.getPhoneNumber() == null) {
+            venuePhoneTextView.setText(getResources().getString(R.string.no_phone_number));
+        } else { venuePhoneTextView.setText(place.getPhoneNumber());
+            makeNumberDialable(venuePhoneTextView, place.getPhoneNumber());
+        }
+    }
+    
+    public void makeNumberDialable(View view, final String number) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri u = Uri.parse("tel:" + number);
+
+                Intent dialerActivity = new Intent(Intent.ACTION_DIAL, u);
+
+                try
+                {
+                    startActivity(dialerActivity);
+                }
+                catch (SecurityException s)
+                {
+                    Toast.makeText(mContext, "An error occurred", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }
