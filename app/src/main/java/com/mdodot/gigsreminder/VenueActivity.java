@@ -200,12 +200,10 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
         }
 
         venueNameTextView = (TextView)findViewById(R.id.venue_name);
-        venueTownTextView = (TextView)findViewById(R.id.venue_town);
         venueAddressTextView = (TextView)findViewById(R.id.venue_address);
         venuePhoneTextView = (TextView)findViewById(R.id.venue_phone);
         venueNameTextView.setText(extras.getString("venueName"));
-        venueTownTextView.setText(extras.getString("venueTown") +", "+ address_components.get("country"));
-        venueAddressTextView.setText(address_components.get("route") +" "+ address_components.get("street_number"));
+        venueAddressTextView.setText(address_components.get("route") +" "+ address_components.get("street_number") +", "+ extras.getString("venueTown"));
 
         if (place.getPhoneNumber() == null) {
             venuePhoneTextView.setText(getResources().getString(R.string.no_phone_number));

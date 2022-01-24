@@ -107,4 +107,30 @@ public class DBHelper extends SQLiteOpenHelper {
                 " WHERE " + VenueEntry.TABLE_NAME + "." + VenueEntry.COL_VENUE_PLACE_ID + " = '" + placeId + "'", null);
         return res;
     }
+
+    public Cursor getGigById(SQLiteDatabase sqLiteDatabase, int gigId) {
+        Cursor res = sqLiteDatabase.rawQuery(" SELECT "+
+                GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_BAND + " , " +
+                GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_VENUE + " , " +
+                GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_TIME + " , " +
+                GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_TOWN + " , " +
+                GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_DATE +
+                " FROM " + GigEntry.TABLE_NAME +
+                " WHERE " + GigEntry.TABLE_NAME + "." + GigEntry.COL_EVENT_ID + " = '" + gigId + "'", null);
+        return res;
+    }
+
+    public String getPlaceId(SQLiteDatabase sqLiteDatabase, int venueId) {
+        Cursor res = sqLiteDatabase.rawQuery("SELECT " + VenueEntry.TABLE_NAME + "." + VenueEntry.COL_VENUE_PLACE_ID +
+                " FROM  " + VenueEntry.TABLE_NAME +
+                " where " + VenueEntry.TABLE_NAME + "." + VenueEntry.COL_VENUE_ID + " = '" + venueId + "'" , null);
+        if (res.getCount() > 0) {
+            res.moveToFirst();
+            int placeIdPos = res.getColumnIndex(VenueEntry.COL_VENUE_PLACE_ID);
+            return res.getString(placeIdPos);
+        }
+        else {
+            return "error";
+        }
+    }
 }

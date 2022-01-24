@@ -12,6 +12,9 @@
     <string name="date">Date</string>
     <string name="hour">Hour</string>
     <string name="settings">Settings</string>
+    <string name="location">Location</string>
+    <string name="lineup">Lineup</string>
+
     <string name="event_add">Add event</string>
     <string name="event_edit">Edit event</string>
     <string name="venue_add">Add venue</string>
@@ -31,6 +34,7 @@
     <string name="upcoming_events">Upcoming events</string>
     <string name="no_upcoming_events">No upcoming events</string>
     <string name="no_phone_number">No phone number available</string>
+
     <string name="places_api_key">AIzaSyAD3BxkppK0NhSdhX7F7CO970MDDb5i6Ic</string>
     <string name="maps_api_key">AIzaSyDSgjqdLzA43PkkBXSKH9YN1nVz-jITW1Q</string>
     <string name="geolocation_api_key">AIzaSyAIKAyM53iMxjuruQ_x2sMusrZwwATuaUc</string>

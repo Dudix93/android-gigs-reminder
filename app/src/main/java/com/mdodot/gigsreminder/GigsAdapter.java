@@ -63,7 +63,9 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
         convertView.findViewById(R.id.gig_entry).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(view.getContext(), GigActivity.class));
+                Intent intent = new Intent(view.getContext(), GigActivity.class);
+                intent.putExtra("gigId", gigModel.getId());
+                mContext.startActivity(intent);
             }
         });
 
