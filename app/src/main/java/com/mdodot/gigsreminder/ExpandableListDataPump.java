@@ -3,6 +3,8 @@ package com.mdodot.gigsreminder;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.mdodot.gigsreminder.DBEntries.GigEntry;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

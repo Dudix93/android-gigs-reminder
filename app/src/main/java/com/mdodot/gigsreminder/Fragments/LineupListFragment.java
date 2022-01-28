@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Fragments;
 
 import android.os.Bundle;
 
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.mdodot.gigsreminder.Adapters.BandsAdapter;
+import com.mdodot.gigsreminder.Models.BandModel;
+import com.mdodot.gigsreminder.R;
 
 import java.util.ArrayList;
 

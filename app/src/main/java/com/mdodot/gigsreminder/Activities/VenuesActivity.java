@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +15,11 @@ import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.mdodot.gigsreminder.Adapters.VenuesAdapter;
+import com.mdodot.gigsreminder.DBHelper;
+import com.mdodot.gigsreminder.DataManager;
+import com.mdodot.gigsreminder.Models.VenueModel;
+import com.mdodot.gigsreminder.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -103,7 +108,7 @@ public class VenuesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AddVenue.class);
+                Intent intent = new Intent(view.getContext(), AddVenueActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -130,7 +135,7 @@ public class VenuesActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    protected void deleteVenue(int venueId) {
+    public void deleteVenue(int venueId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         dbHelper.deleteVenue(db, venueId);
         if (!adapter.isEmpty()) {
@@ -147,7 +152,7 @@ public class VenuesActivity extends AppCompatActivity {
     }
 
     public void editVenue(VenueModel venueModel) {
-        intent = new Intent(this, AddVenue.class);
+        intent = new Intent(this, AddVenueActivity.class);
         intent.putExtra("venueId", venueModel.getId());
         intent.putExtra("venueName", venueModel.getName());
         intent.putExtra("venueTown", venueModel.getTown());

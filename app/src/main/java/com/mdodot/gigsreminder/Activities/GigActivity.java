@@ -1,23 +1,17 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
@@ -27,9 +21,13 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.tabs.TabLayout;
+import com.mdodot.gigsreminder.Adapters.EventTabLayoutAdapter;
+import com.mdodot.gigsreminder.DBEntries.BandEntry;
+import com.mdodot.gigsreminder.DBHelper;
+import com.mdodot.gigsreminder.DBEntries.GigEntry;
+import com.mdodot.gigsreminder.Models.BandModel;
+import com.mdodot.gigsreminder.R;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

@@ -1,17 +1,16 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import com.mdodot.gigsreminder.Activities.AddEventActivity;
+import com.mdodot.gigsreminder.Models.BandModel;
+import com.mdodot.gigsreminder.R;
 
 import java.util.ArrayList;
 
@@ -47,14 +46,14 @@ public class BandsAdapter extends ArrayAdapter<BandModel>  {
 
         viewHolder.band.setText(bandModel.getBandName());
 
-        if (getContext().getClass() == AddEvent.class) {
+        if (getContext().getClass() == AddEventActivity.class) {
             convertView.findViewById(R.id.deleteListItemIcon).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (!dataSet.isEmpty()) {
-                        AddEvent.supportsList.remove(bandModel);
-                        AddEvent.supportsAdapter.notifyDataSetChanged();
-                        AddEvent.supportsForDeletion.add(bandModel);
+                        AddEventActivity.supportsList.remove(bandModel);
+                        AddEventActivity.supportsAdapter.notifyDataSetChanged();
+                        AddEventActivity.supportsForDeletion.add(bandModel);
                     }
                 }
             });

@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,6 +7,10 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.mdodot.gigsreminder.Activities.GigsActivity;
+import com.mdodot.gigsreminder.R;
+import com.mdodot.gigsreminder.Activities.VenuesActivity;
 
 public class DeleteDialogFragment extends DialogFragment {
     private int id;

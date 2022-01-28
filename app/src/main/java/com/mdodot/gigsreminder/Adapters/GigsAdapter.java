@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
+
+import com.mdodot.gigsreminder.Fragments.EntryOptionsDialogFragment;
+import com.mdodot.gigsreminder.Activities.GigActivity;
+import com.mdodot.gigsreminder.Activities.GigsActivity;
+import com.mdodot.gigsreminder.Models.GigModel;
+import com.mdodot.gigsreminder.R;
 
 import java.util.ArrayList;
 

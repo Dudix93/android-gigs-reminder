@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Fragments;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mdodot.gigsreminder.R;
 
 import java.util.HashMap;
 

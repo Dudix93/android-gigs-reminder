@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Adapters;
 
 import android.content.Context;
 
@@ -6,6 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.mdodot.gigsreminder.Fragments.LineupListFragment;
+import com.mdodot.gigsreminder.Fragments.LocationDetailsFragment;
+import com.mdodot.gigsreminder.Models.BandModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

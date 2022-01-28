@@ -5,6 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.mdodot.gigsreminder.DBEntries.BandEntry;
+import com.mdodot.gigsreminder.DBEntries.EventBand;
+import com.mdodot.gigsreminder.DBEntries.GigEntry;
+import com.mdodot.gigsreminder.DBEntries.VenueEntry;
+
 public class DBHelper extends SQLiteOpenHelper {
     private static final int DB_VER = 1;
     private static final String DB_NAME = "gigsDb";

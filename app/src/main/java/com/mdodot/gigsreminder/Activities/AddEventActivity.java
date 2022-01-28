@@ -1,6 +1,5 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,7 +11,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,11 +20,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.google.android.material.snackbar.Snackbar;
+import com.mdodot.gigsreminder.Adapters.BandsAdapter;
+import com.mdodot.gigsreminder.Adapters.VenuesAdapter;
+import com.mdodot.gigsreminder.DBEntries.BandEntry;
+import com.mdodot.gigsreminder.DBHelper;
+import com.mdodot.gigsreminder.DataManager;
+import com.mdodot.gigsreminder.DBEntries.EventBand;
+import com.mdodot.gigsreminder.DBEntries.GigEntry;
+import com.mdodot.gigsreminder.Models.BandModel;
+import com.mdodot.gigsreminder.Models.GigModel;
+import com.mdodot.gigsreminder.Models.VenueModel;
+import com.mdodot.gigsreminder.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +41,7 @@ import java.util.List;
 
 import static java.lang.String.valueOf;
 
-public class AddEvent extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity {
 
     private AwesomeValidation awesomeValidation;
     private DBHelper dbHelper;
@@ -88,7 +95,7 @@ public class AddEvent extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
                 // date picker dialog
-                DatePickerDialog picker = new DatePickerDialog(AddEvent.this,
+                DatePickerDialog picker = new DatePickerDialog(AddEventActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -105,7 +112,7 @@ public class AddEvent extends AppCompatActivity {
                 final Calendar calendar = Calendar.getInstance();
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 int minute = calendar.get(Calendar.MINUTE);
-                TimePickerDialog picker = new TimePickerDialog(AddEvent.this,
+                TimePickerDialog picker = new TimePickerDialog(AddEventActivity.this,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -243,7 +250,7 @@ public class AddEvent extends AppCompatActivity {
                 editTextDate.getText().toString(),
                 editTextTime.getText().toString(),
                 1);
-        Intent intent = new Intent(view.getContext(), AddVenue.class);
+        Intent intent = new Intent(view.getContext(), AddVenueActivity.class);
         intent.putExtra("FromAddEventActivity", true);
         intent.putExtra("event",event);
         startActivity(intent);

@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Adapters;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mdodot.gigsreminder.R;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 

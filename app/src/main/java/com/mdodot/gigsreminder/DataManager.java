@@ -3,8 +3,12 @@ package com.mdodot.gigsreminder;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.mdodot.gigsreminder.DBEntries.GigEntry;
+import com.mdodot.gigsreminder.DBEntries.VenueEntry;
+import com.mdodot.gigsreminder.Models.GigModel;
+import com.mdodot.gigsreminder.Models.VenueModel;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataManager {
     private static DataManager ourInstance = null;

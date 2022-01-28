@@ -55,7 +55,7 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:context="com.mdodot.gigsreminder.VenueActivity"/>
+                tools:context="com.mdodot.gigsreminder.Activities.VenueActivity"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/map_get_directions"

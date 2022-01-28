@@ -1,42 +1,38 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Activities;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.mdodot.gigsreminder.DBHelper;
+import com.mdodot.gigsreminder.Models.GigModel;
+import com.mdodot.gigsreminder.R;
+import com.mdodot.gigsreminder.DBEntries.VenueEntry;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AddVenue extends AppCompatActivity {
+public class AddVenueActivity extends AppCompatActivity {
 
     private static final String TAG = "AddVenueActivity";
     private AwesomeValidation awesomeValidation;
@@ -142,7 +138,7 @@ public class AddVenue extends AppCompatActivity {
     private void backToAddEventActivity(View view) {
         if (extras != null) {
             if (extras.getBoolean("FromAddEventActivity") && extras.get("event") != null) {
-                Intent intent = new Intent(view.getContext(), AddEvent.class);
+                Intent intent = new Intent(view.getContext(), AddEventActivity.class);
                 intent.putExtra("event", (GigModel)extras.get("event"));
                 startActivity(intent);
             }

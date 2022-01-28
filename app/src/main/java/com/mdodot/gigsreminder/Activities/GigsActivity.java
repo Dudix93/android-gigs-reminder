@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +15,11 @@ import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.mdodot.gigsreminder.Adapters.GigsAdapter;
+import com.mdodot.gigsreminder.DBHelper;
+import com.mdodot.gigsreminder.DataManager;
+import com.mdodot.gigsreminder.Models.GigModel;
+import com.mdodot.gigsreminder.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,7 +68,7 @@ public class GigsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AddEvent.class);
+                Intent intent = new Intent(view.getContext(), AddEventActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -79,7 +84,7 @@ public class GigsActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    protected void deleteGig(int gigId) {
+    public void deleteGig(int gigId) {
         db = dbHelper.getWritableDatabase();
         dbHelper.deleteGig(db, gigId);
         loadData();
@@ -87,7 +92,7 @@ public class GigsActivity extends AppCompatActivity {
     }
 
     public void editGig(GigModel gigModel) {
-        intent = new Intent(this, AddEvent.class);
+        intent = new Intent(this, AddEventActivity.class);
         intent.putExtra("eventId", gigModel.getId());
         intent.putExtra("eventBand", gigModel.getBand());
         intent.putExtra("eventTown", gigModel.getTown());

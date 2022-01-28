@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VenueActivity" />
-        <activity android:name=".GigActivity" />
-        <activity android:name=".VenuesActivity" />
-        <activity android:name=".AddEvent" />
-        <activity android:name=".AddVenue" />
-        <activity android:name=".GigsActivity">
+        <activity android:name=".Activities.VenueActivity" />
+        <activity android:name=".Activities.GigActivity" />
+        <activity android:name=".Activities.VenuesActivity" />
+        <activity android:name=".Activities.AddEventActivity" />
+        <activity android:name=".Activities.AddVenueActivity" />
+        <activity android:name=".Activities.GigsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

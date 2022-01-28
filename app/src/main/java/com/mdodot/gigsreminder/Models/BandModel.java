@@ -1,4 +1,4 @@
-package com.mdodot.gigsreminder;
+package com.mdodot.gigsreminder.Models;
 
 import java.io.Serializable;
 import java.util.Date;
