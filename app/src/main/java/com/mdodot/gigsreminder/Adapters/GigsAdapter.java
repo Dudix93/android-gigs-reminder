@@ -45,6 +45,7 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
         gigModel = getItem(position);
         final ViewHolder viewHolder;
         final View result;
+        final int gigId = gigModel.getId();
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -70,14 +71,12 @@ public class GigsAdapter extends ArrayAdapter<GigModel> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), GigActivity.class);
-                intent.putExtra("gigId", gigModel.getId());
+                intent.putExtra("gigId", gigId);
                 mContext.startActivity(intent);
             }
         });
 
         convertView.findViewById(R.id.gig_entry).setOnLongClickListener(new View.OnLongClickListener() {
-
-            private final int gigId = gigModel.getId();
 
             @Override
             public boolean onLongClick(View view) {
