@@ -81,7 +81,8 @@ public class GigActivity extends AppCompatActivity {
                 getSupportFragmentManager(),
                 tabLayout.getTabCount(),
                 placeDetails,
-                supportsList);
+                supportsList,
+                place);
         viewPager.setAdapter(eventTabLayoutAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -150,7 +151,8 @@ public class GigActivity extends AppCompatActivity {
             FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, placeFields).build();
             placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
                 public void onSuccess(FetchPlaceResponse response) {
-                    fillPlaceDetails(response.getPlace());
+                    GigActivity.this.place = response.getPlace();
+                    fillPlaceDetails(GigActivity.this.place);
                     setupTabLayout();
                 }
             }).addOnFailureListener(new OnFailureListener() {

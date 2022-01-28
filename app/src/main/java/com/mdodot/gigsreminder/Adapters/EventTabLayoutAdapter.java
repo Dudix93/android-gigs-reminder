@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.google.android.libraries.places.api.model.Place;
 import com.mdodot.gigsreminder.Fragments.LineupListFragment;
 import com.mdodot.gigsreminder.Fragments.LocationDetailsFragment;
 import com.mdodot.gigsreminder.Models.BandModel;
@@ -20,13 +21,20 @@ public class EventTabLayoutAdapter extends FragmentPagerAdapter {
     private int mTotalTabs;
     private ArrayList<BandModel> supportsList;
     private HashMap<String, String> placeDetails;
+    private Place place;
 
-    public EventTabLayoutAdapter(Context context , FragmentManager fragmentManager , int totalTabs, HashMap<String, String> placeDetails, ArrayList<BandModel> supportsList) {
+    public EventTabLayoutAdapter(Context context ,
+                                 FragmentManager fragmentManager ,
+                                 int totalTabs,
+                                 HashMap<String, String> placeDetails,
+                                 ArrayList<BandModel> supportsList,
+                                 Place place) {
         super(fragmentManager);
         mContext = context;
         mTotalTabs = totalTabs;
         this.placeDetails = placeDetails;
         this.supportsList = supportsList;
+        this.place = place;
     }
 
     @NonNull
@@ -34,7 +42,7 @@ public class EventTabLayoutAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new LocationDetailsFragment(this.placeDetails);
+                return new LocationDetailsFragment(this.placeDetails, this.place);
             case 1:
                 return new LineupListFragment(this.supportsList);
             default:
