@@ -35,6 +35,7 @@
     <string name="no_upcoming_events">No upcoming events</string>
     <string name="no_phone_number">No phone number available</string>
     <string name="no_supports">This event doesn\'t have support bands</string>
+    <string name="add_event_to_calendar">Add event to calendar</string>
 
     <string name="places_api_key">AIzaSyAD3BxkppK0NhSdhX7F7CO970MDDb5i6Ic</string>
     <string name="maps_api_key">AIzaSyDSgjqdLzA43PkkBXSKH9YN1nVz-jITW1Q</string>

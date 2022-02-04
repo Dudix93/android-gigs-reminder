@@ -21,6 +21,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"/>
 
+        <include
+            android:id="@+id/add_to_calendar"
+            layout="@layout/add_to_calendar_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

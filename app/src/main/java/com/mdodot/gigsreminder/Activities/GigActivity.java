@@ -49,10 +49,14 @@ public class GigActivity extends AppCompatActivity {
     public ArrayList<BandModel> supportsList;
     private HashMap<String, String> address_components;
     private HashMap<String, String> placeDetails;
+    private HashMap<String, String> eventDetails;
     private PlacesClient placesClient;
     private Place place;
     private String placeId;
     private String venueTown;
+    private String eventBand;
+    private String eventDate;
+    private String eventTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +86,8 @@ public class GigActivity extends AppCompatActivity {
                 tabLayout.getTabCount(),
                 placeDetails,
                 supportsList,
-                place);
+                place,
+                this.eventDetails);
         viewPager.setAdapter(eventTabLayoutAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -116,11 +121,21 @@ public class GigActivity extends AppCompatActivity {
             int gigTownPos = gig.getColumnIndex(GigEntry.COL_EVENT_TOWN);
             int gigVenuePos = gig.getColumnIndex(GigEntry.COL_EVENT_VENUE);
 
-            bandNameTextView.setText(gig.getString(gigBandPos));
-            String gigTimeAndDate = gig.getString(gigDatePos) + " " + gig.getString(gigTimePos);
+            this.eventBand = gig.getString(gigBandPos);
+            this.eventDate = gig.getString(gigDatePos);
+            this.eventTime = gig.getString(gigTimePos);
+
+            String gigTimeAndDate = this.eventDate + " " + this.eventTime;
+
+            bandNameTextView.setText(this.eventBand);
             eventDateTextView.setText(gigTimeAndDate);
-            venueId = gig.getInt(gigVenuePos);
-            venueTown = gig.getString(gigTownPos);
+            this.venueId = gig.getInt(gigVenuePos);
+            this.venueTown = gig.getString(gigTownPos);
+
+            this.eventDetails = new HashMap<>();
+            eventDetails.put("band", this.eventBand);
+            eventDetails.put("date", this.eventDate);
+            eventDetails.put("time", this.eventTime);
         }
         if (bandsByEvent.getCount() > 0) {
             while (bandsByEvent.moveToNext()) {

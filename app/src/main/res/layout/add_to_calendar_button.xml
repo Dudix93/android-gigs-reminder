@@ -5,7 +5,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/get_directions_button"
+        android:id="@+id/add_to_calendar_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -21,24 +21,24 @@
             android:layout_gravity="center">
 
             <ImageView
-                android:id="@+id/placeIcon"
+                android:id="@+id/calendarIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:tint="@color/cardview_dark_background"
-                android:src="@drawable/ic_car" />
+                android:src="@drawable/ic_event" />
 
             <TextView
                 android:id="@+id/map_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/placeIcon"
+                android:layout_toRightOf="@+id/calendarIcon"
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center_horizontal"
                 android:lines="1"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/get_directions"
+                android:text="@string/add_event_to_calendar"
                 android:textColor="@color/cardview_dark_background"
                 android:textStyle="bold" />
 

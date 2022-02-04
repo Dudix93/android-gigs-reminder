@@ -107,7 +107,7 @@ public class VenueActivity extends FragmentActivity implements OnMapReadyCallbac
                 place = response.getPlace();
                 prepareExpandableList();
                 mapFragment.getMapAsync((OnMapReadyCallback) mapFragment.getContext());
-                findViewById(R.id.map_get_directions).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.get_directions_button).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         try {

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,11 @@ import com.mdodot.gigsreminder.R;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -31,11 +37,14 @@ public class LocationDetailsFragment extends Fragment {
     private TextView venueAddressTextView ;
     private TextView venuePhoneTextView;
     private CardView getDirectionsCardView;
+    private CardView addEventToCalendarCardView;
     private HashMap<String, String> placeDetails;
+    private HashMap<String, String> eventDetails;
 
-    public LocationDetailsFragment(HashMap<String, String> placeDetails, Place place) {
+    public LocationDetailsFragment(HashMap<String, String> placeDetails, Place place, HashMap<String, String> eventDetails) {
         this.placeDetails = placeDetails;
         this.place = place;
+        this.eventDetails = eventDetails;
     }
 
     @Override
@@ -45,7 +54,8 @@ public class LocationDetailsFragment extends Fragment {
         this.venueNameTextView = (TextView) layoutView.findViewById(R.id.venue_name);
         this.venueAddressTextView = (TextView) layoutView.findViewById(R.id.venue_address);
         this.venuePhoneTextView = (TextView) layoutView.findViewById(R.id.venue_phone);
-        this.getDirectionsCardView = (CardView) layoutView.findViewById(R.id.map_get_directions);
+        this.getDirectionsCardView = (CardView) layoutView.findViewById(R.id.get_directions_button);
+        this.addEventToCalendarCardView = (CardView) layoutView.findViewById(R.id.add_to_calendar_button);
 
         this.venueNameTextView.setText(this.placeDetails.get("venue_name"));
         this.venueAddressTextView.setText(this.placeDetails.get("venue_address"));
@@ -70,6 +80,30 @@ public class LocationDetailsFragment extends Fragment {
                 }
             });
         }
+
+        this.addEventToCalendarCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String eventDate = eventDetails.get("date")+" "+eventDetails.get("time");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.UK);
+                try {
+                    Date date = sdf.parse(eventDate);
+                    long miliseconds = date.getTime();
+                    Intent intent = new Intent(Intent.ACTION_INSERT);
+                    intent.setType("vnd.android.cursor.item/event");
+                    intent.putExtra(CalendarContract.Events.TITLE, eventDetails.get("band"));
+                    intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, miliseconds);
+                    intent.putExtra(CalendarContract.Events.EVENT_LOCATION, place.getAddress());
+
+                    if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+                        startActivity(intent);
+                    }
+                } catch(Exception e) {
+                    Toast.makeText(getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         return layoutView;
     }

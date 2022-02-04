@@ -21,6 +21,7 @@ public class EventTabLayoutAdapter extends FragmentPagerAdapter {
     private int mTotalTabs;
     private ArrayList<BandModel> supportsList;
     private HashMap<String, String> placeDetails;
+    private HashMap<String, String> eventDetails;
     private Place place;
 
     public EventTabLayoutAdapter(Context context ,
@@ -28,13 +29,15 @@ public class EventTabLayoutAdapter extends FragmentPagerAdapter {
                                  int totalTabs,
                                  HashMap<String, String> placeDetails,
                                  ArrayList<BandModel> supportsList,
-                                 Place place) {
+                                 Place place,
+                                 HashMap<String, String> eventDetails) {
         super(fragmentManager);
         mContext = context;
         mTotalTabs = totalTabs;
         this.placeDetails = placeDetails;
         this.supportsList = supportsList;
         this.place = place;
+        this.eventDetails = eventDetails;
     }
 
     @NonNull
@@ -42,7 +45,7 @@ public class EventTabLayoutAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new LocationDetailsFragment(this.placeDetails, this.place);
+                return new LocationDetailsFragment(this.placeDetails, this.place, this.eventDetails);
             case 1:
                 return new LineupListFragment(this.supportsList);
             default:
