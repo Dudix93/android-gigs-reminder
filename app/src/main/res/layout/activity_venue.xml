@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_above="@+id/venue_events"
-        layout="@layout/location_details" />
+        layout="@layout/location_details"
+        android:layout_margin="10sp"/>
 
     <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,7 +25,7 @@
         android:layout_gravity="center"
         card_view:cardCornerRadius="4dp"
         card_view:cardBackgroundColor="@color/quantum_grey400"
-        android:layout_margin="10sp"
+        android:layout_margin="20sp"
         >
 
         <ExpandableListView
@@ -43,7 +44,7 @@
         android:layout_gravity="center"
         card_view:cardCornerRadius="4dp"
         card_view:cardBackgroundColor="@color/quantum_grey400"
-        android:layout_margin="50sp"
+        android:layout_margin="20sp"
         >
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -62,7 +63,7 @@
                 layout="@layout/get_directions_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp" />
 
         </RelativeLayout>
 
